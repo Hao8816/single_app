@@ -1,0 +1,35 @@
+.my_profile_nav{
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+.my_profile_nav li{
+    float: left;
+    width: 33%;
+    list-style: none;
+    text-align: center;
+    padding: 3px 0px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius:5px;
+}
+.my_profile_nav li:hover{
+    background-color: #f5f5f5;
+}
+.my_profile_nav li:last-child{
+    border-right: none;
+}
+.my_profile_nav li .title{
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+}
+.my_profile{
+    padding: 8px 15px;
+    overflow: auto;
+}
+.my_profile .head_image{
+    float: right;
+    height: 35px;
+    width: 35px;
+}

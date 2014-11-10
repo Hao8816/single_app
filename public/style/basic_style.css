@@ -1,0 +1,360 @@
+
+/*define css animate on the top of page*/
+.animated.headroom--pinned {
+    -webkit-animation-name: slideDown;
+    -moz-animation-name: slideDown;
+    -o-animation-name: slideDown;
+    animation-name: slideDown;
+}
+
+.animated.headroom--unpinned {
+    -webkit-animation-name: slideUp;
+    -moz-animation-name: slideUp;
+    -o-animation-name: slideUp;
+    animation-name: slideUp;
+}
+
+.headroom--top {
+    -webkit-animation-name: slideDown;
+    -moz-animation-name: slideDown;
+    -o-animation-name: slideDown;
+    animation-name: slideDown;
+}
+
+.headroom--not-top {
+}
+
+.headroom {
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+.animated {
+    -webkit-animation-duration: .5s;
+    -moz-animation-duration: .5s;
+    -o-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    -o-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+
+@-webkit-keyframes slideDown {
+    0% {
+        -webkit-transform: translateY(-4em)
+    }
+    100% {
+        -webkit-transform: translateY(0)
+    }
+}
+
+@-moz-keyframes slideDown {
+    0% {
+        -moz-transform: translateY(-4em)
+    }
+    100% {
+        -moz-transform: translateY(0)
+    }
+}
+
+@-o-keyframes slideDown {
+    0% {
+        -o-transform: translateY(-4em)
+    }
+    100% {
+        -o-transform: translateY(0)
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        transform: translateY(-4em)
+    }
+    100% {
+        transform: translateY(0)
+    }
+}
+
+.animated.slideDown {
+    -webkit-animation-name: slideDown;
+    -moz-animation-name: slideDown;
+    -o-animation-name: slideDown;
+    animation-name: slideDown
+}
+
+@-webkit-keyframes slideUp {
+    0% {
+        -webkit-transform: translateY(0)
+    }
+    100% {
+        -webkit-transform: translateY(-4em)
+    }
+}
+
+@-moz-keyframes slideUp {
+    0% {
+        -moz-transform: translateY(0)
+    }
+    100% {
+        -moz-transform: translateY(-4em)
+    }
+}
+
+@-o-keyframes slideUp {
+    0% {
+        -o-transform: translateY(0)
+    }
+    100% {
+        -o-transform: translateY(-4em)
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(0)
+    }
+    100% {
+        transform: translateY(-4em)
+    }
+}
+
+.animated.slideUp {
+    -webkit-animation-name: slideUp;
+    -moz-animation-name: slideUp;
+    -o-animation-name: slideUp;
+    animation-name: slideUp
+}
+
+
+.nav-item{
+    padding: 0px 5px;
+    cursor: pointer;
+}
+.nav-item:hover{
+    color: #09c;
+}
+
+.back-top-btn{
+    position: fixed;
+    padding: 5px;
+    right: 2%;
+    bottom: 20px;
+    font-size: 12px;
+    z-index: 1;
+}
+.back-top-btn p{
+    margin: 0;
+    padding: 8px;
+    cursor: pointer;
+    background-color: #000;
+    color: #ffffff;
+    opacity: 0.5;
+}
+.back-top-btn p:first-child{
+    border-bottom: 1px solid #333;
+}
+.back-top-btn p:hover{
+    opacity: 0.7;
+}
+.footer-link{
+    font-size: 13px;
+    color: #999;
+    padding: 5px 10px;
+    margin: 0;
+}
+.footer-link a{
+    padding: 2px 10px;
+}
+.footer-coryright{
+    color: #999;
+    font-size: 13px;
+    padding: 3px 10px;
+    margin: 0;
+}
+
+
+
+/*define css icon */
+
+[class^="sicon-"],
+[class*="sicon-"] {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-top: 1px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+}
+
+.sicon-bus{
+    background-image: url("images/bus.png");
+}
+.sicon-car{
+    background-image: url("images/car.png");
+}
+.sicon-coffee{
+    background-image: url("images/coffee.png");
+}
+.sicon-film{
+    background-image: url("images/film.png");
+}
+.sicon-health{
+    background-image:url("images/health.png");
+}
+.sicon-ktv{
+    background-image: url("images/microphone.png");
+}
+.sicon-hotel{
+    background-image: url("images/home.png");
+}
+.sicon-bank{
+    background-image: url("images/credit.png");
+}
+.sicon-market{
+    background-image: url("images/cart.png");
+}
+.sicon-phone{
+    background-image: url("images/phone.png");
+}
+.sicon-radio{
+    background-image: url("images/radio.png");
+}
+.sicon-store{
+    background-image: url("images/sale.png");
+}
+
+
+
+.nav-kit-list{
+    margin: 0;
+    padding: 0;
+}
+.nav-kit-list li{
+    list-style: none;
+    padding: 5px;
+    text-align: center;
+    cursor: pointer;
+
+}
+.nav-kit-list li a{
+    text-decoration: none;
+    color: #666;
+    padding: 5px 8px;
+}
+.nav-kit-list li a:hover{
+    color: #09c;
+}
+
+.nav-kit-list .active a{
+    color: #09c;
+}
+.nav-kit-list .active{
+    border-bottom: 1px solid #09c;
+    position: relative;
+}
+.nav-kit-list .active:before{
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;  /* Go big on the size, and let overflow hide */
+    border-bottom:3px solid #0099cc;
+    border-right: 5px solid transparent;
+    bottom: 0px;
+    margin-top: 0px;
+    left: 48%;
+    z-index: 2;
+    position: absolute;
+
+}
+.ad-item{
+    text-align: center;
+    padding: 10% 2px;
+}
+
+.qcode{
+    display: inline-block;
+    width: 96px;
+    height: 96px;
+    margin-top: 1px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    background-image: url("images/qrcode.png");
+}
+.map{
+    display: inline-block;
+    width: 88px;
+    height: 88px;
+    margin-top: 4px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-position: -20px -8px;
+    background-repeat: no-repeat;
+    background-image: url("images/map.jpg");
+    border: 1px solid #ddd;
+}
+.bookmark{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-top: 1px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    background-image: url("images/bookmark.png");
+}
+
+.heart,.star,.good,.share-tool{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-top: 1px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+}
+.heart{
+    background-image: url("images/heart.png");
+}
+.star{
+    background-image: url("images/star.png");
+}
+.good{
+    background-image: url("images/thumbs-up.png");
+}
+
+.share-tool{
+   background-image: url("images/function.png");    
+}
+.minus,.plus{
+    display: inline-block;
+    width: 12px;
+    height: 13px;
+    margin-top: 1px;
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+}
+.minus{
+    background-image: url("images/minus.png");
+}
+.plus{
+    background-image: url("images/plus.png");
+}
