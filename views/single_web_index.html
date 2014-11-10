@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <meta charset="utf-8">
+    <title>Single</title>
+    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/headroom.js"></script>
+    <script type="text/javascript" src="/lib/jQuery.headroom.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+    <script type="text/javascript" src="/js/controller.js"></script>
+
+    <link rel="stylesheet" href="/style/single_index.css"/>
+    <script type="text/javascript" src="/js/single_index.js"></script>
+</head>
+<body>
+<header id="header" data-headroom class="container-fluid animated">
+    <div class="row" style="background-color:rgba(48, 63, 159, 0.87);padding: 8px 10px;color: #fff;">
+        <div class="col-xs-6 col-sm-5 col-md-4">
+            <img src="/images/single_logo.ico" alt=""/>
+            <a href="/single/index/" style="color: #ffffff">首页</a>
+        </div>
+        <div class="col-xs-6 col-sm-7 col-md-8" style="text-align: right">
+            <span class="nav-item" onclick="reditectShoppingCartPage()"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</span>
+            <span class="nav-item">我的订单</span>
+            <span class="nav-item">我的帐号</span>
+            <span class="nav-item"><i class="glyphicon glyphicon-map-marker"></i>我的位置[北京]</span>
+        </div>
+    </div>
+</header>
+<div class="container" id="root-view-container" style="min-height: 1700px;">
+    <div class="row">
+        <div class="col-xs-12 col-md-3" style="height: 40px;">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div style="padding: 15px 0px 5px 0px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <div style="text-align: center;padding: 5px 0px;">
+                            商品搜索
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8">
+                        <div style="background-color:#fff;border:1px solid #ddd;overflow: auto;border-radius: 2px;">
+                            <input class="form-control input-sm" style="float:left;width: 80%;box-shadow: none;border: none" placeholder="商品名称" type="text"/>
+                            <span style="font-size:13px;float: right;padding: 6px 13px;border-left:1px solid #ddd;background-color: #f5f5f5">搜索</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 13px;padding: 10px 3px;margin: 0"><span>关键词：</span>
+                    <a href=""> Nike </a>
+                    <a href=""> LiNing </a>
+                    <a href=""> BWM </a>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div style="padding:0px;">
+                <div class="my_profile">
+                    <img class="head_image" src="/images/icons/default_head_image.png" alt=""/>
+                    <p class="profile_info">
+                        <span class="name">chenhao8816</span>
+                    </p>
+                    <p class="account_info">
+                        <span class="account">账户余额：<a href="">$500</a></span>
+                    </p>
+                </div>
+                <div style="background-color: #fff;overflow: auto;clear: both;box-shadow: 0px 1px 0px 0px #ddd">
+                    <ul class="my_profile_nav">
+                        <li>我关注的
+                        </li>
+                        <li>我喜欢的
+                        </li>
+                        <li>我的分享
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-2" style="padding-left:0px;background-color: #fafafa;">
+            <ul class="row nav-kit" style="background-color: #fff">
+                <li class="col-xs-3 col-md-12">1 + 2 = {{ 1 + 2 }}</li>
+                <li class="col-xs-3 col-md-12">附近分享 (11)</li>
+                <li class="col-xs-3 col-md-12 nav-active">最美推荐</li>
+                <li class="col-xs-3 col-md-12">最热推荐</li>
+                <li class="col-xs-3 col-md-12">我的地盘</li>
+                <li class="col-xs-3 col-md-12">折扣信息</li>
+                <li class="col-xs-3 col-md-12">省心省钱</li>
+                <li class="col-xs-3 col-md-12">私人定制</li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-7" style="padding:0px;background: #f5f5f5;">
+            <div id="myCarousel" class="carousel slide">
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                    <div class="active item">
+                        <img src="/images/picture/item1.jpg" alt=""/>
+                        <div class="carousel-caption">
+                            <h4>First Thumbnail label</h4>
+                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/images/picture/item2.jpg" alt=""/>
+                        <div class="carousel-caption">
+                            <h4>First Thumbnail label</h4>
+                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="/images/picture/item3.jpg" alt=""/>
+                        <div class="carousel-caption">
+                            <h4>First Thumbnail label</h4>
+                            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Carousel nav -->
+                <a class="carousel-control left" href="#myCarousel" data-slide="prev"></a>
+                <a class="carousel-control right" href="#myCarousel" data-slide="next"></a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-md-3" style="padding: 0">
+            <div style="overflow:auto;padding: 15px;">
+                <ul class="location_nav">
+                    <li><i class="sicon-hotel"></i>旅馆</li>
+                    <li><i class="sicon-bus"></i>公交</li>
+                    <li><i class="sicon-car"></i>出租车</li>
+                    <li><i class="sicon-bank"></i>银行</li>
+                    <li><i class="sicon-coffee"></i>下午茶</li>
+                    <li><i class="sicon-market"></i>购物</li>
+                    <li><i class="sicon-film"></i>电影</li>
+                    <li><i class="sicon-ktv"></i>KTV</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-12 col-sm-12 col-md-12" style="padding: 0">
+            <ul  class="row nav-kit-list" role="tablist" id="myTab">
+                <li class="active col-xs-3 col-md-2"><a href="#home" role="tab" data-toggle="tab">超市热销</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#profile" role="tab" data-toggle="tab">商场特价</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#messages" role="tab" data-toggle="tab">餐饮资讯</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#settings" role="tab" data-toggle="tab">购物天地</a></li>
+            </ul>
+        </div>
+        <div class="col-md-12" style="clear: both;padding: 0">
+            <div style="min-height: 500px;">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home">
+                        <div ng-controller="ShowGoodsCtrl">
+                            <div class="ad-item-outter col-xs-4 col-md-2" ng-repeat="good in goods">
+                                <div class="ad-item" ng-click="showGoodsInfo(good)">
+                                    <img class="img-responsive" ng-src="{{good.url}}" alt=""/>
+                                    <p class="ad-title">{{good.name}}</p>
+                                    <p class="ad-desc">{{good.descc}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="profile">
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg13.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg14.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg15.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg16.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg17.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg18.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="messages">3</div>
+                    <div class="tab-pane" id="settings">4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-12" style="padding: 0">
+            <div style="min-height: 500px;border: 1px solid #ddd"></div>
+        </div>
+    </div>
+    <div class="row loading-more-btn" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <span style="cursor: pointer">
+                    <i class="glyphicon glyphicon-refresh"></i>加载更多</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12" style="padding: 0">
+            <div style="border: 1px solid #ddd;min-height: 120px;"></div>
+        </div>
+    </div>
+    <div class="back-top-btn" style="display: none">
+        <p>消息</p>
+        <p onclick="bindBackTop()">顶部</p>
+    </div>
+    <div class="row" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <p class="footer-link">
+                    <a href="#">关于我们</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">在线客服</a>
+                    <a href="#">销售联盟</a>
+                </p>
+                <p class="footer-coryright">网络文化经营许可证京网文[2011]0168-061号  Copyright © 2004-2014</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

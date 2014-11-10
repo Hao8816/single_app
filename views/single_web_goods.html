@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Single Goods</title>
+    <meta name="single-goods-info" content="<%=data.goods%>">
+    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/headroom.js"></script>
+    <script type="text/javascript" src="/lib/jQuery.headroom.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+
+    <link rel="stylesheet" href="/style/single_index.css"/>
+    <script type="text/javascript" src="/js/single_index.js"></script>
+    <style type="text/css">
+        .goods_kit_nav{
+            margin: 0;
+            padding: 0;
+        }
+        .goods_kit_nav li{
+            float: left;
+            width: 20%;
+            text-align: center;
+            list-style: none;
+            cursor: pointer;
+        }
+        .goods_kit_nav li:hover{
+            color: #333;
+        }
+        .goods_kit_nav li a{
+            width: 100%;
+            float: left;
+            text-decoration: none;
+            padding: 5px 0px;
+        }
+        .goods_kit_nav .nav_active{
+            background-color: #fff;
+            border-bottom: none;
+        }
+        .goods_kit_nav .nav_active a{
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+<header id="header" data-headroom class="container-fluid animated">
+    <div class="row" style="background-color:rgba(48, 63, 159, 0.87);padding: 8px 10px;color: #fff;">
+        <div class="col-xs-6 col-sm-5 col-md-4">
+            <img src="/images/single_logo.ico" alt=""/>
+            <a href="/single/index/" style="color: #ffffff">首页</a>
+        </div>
+        <div class="col-xs-6 col-sm-7 col-md-8" style="text-align: right">
+            <span class="nav-item" onclick="reditectShoppingCartPage()"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</span>
+            <span class="nav-item">我的订单</span>
+            <span class="nav-item">我的帐号</span>
+            <span class="nav-item"><i class="glyphicon glyphicon-map-marker"></i>我的位置[北京]</span>
+        </div>
+    </div>
+</header>
+<div class="container" id="root-view-container" style="min-height: 1700px;">
+    <div class="row">
+        <div class="col-xs-12 col-md-3" style="height: 60px;">
+                <%=data%>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div style="padding: 15px 0px 5px 0px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <div style="text-align: center;padding: 5px 0px;">
+                            商品搜索
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8">
+                        <div style="background-color:#fff;border:1px solid #ddd;overflow: auto;border-radius: 2px;">
+                            <input class="form-control input-sm" style="float:left;width: 80%;box-shadow: none;border: none" placeholder="商品名称" type="text"/>
+                            <span style="font-size:13px;float: right;padding: 6px 13px;border-left:1px solid #ddd;background-color: #f5f5f5">搜索</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 13px;padding: 10px 3px;margin: 0"><span>关键词：</span>
+                    <a href=""> Nike </a>
+                    <a href=""> LiNing </a>
+                    <a href=""> BWM </a>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div style="padding:0px;">
+                <div class="my_profile">
+                    <img class="head_image" src="/images/icons/default_head_image.png" alt=""/>
+                    <p class="profile_info">
+                        <span class="name">chenhao8816</span>
+                    </p>
+                    <p class="account_info">
+                        <span class="account">账户余额：<a href="">$500</a></span>
+                    </p>
+                </div>
+                <div style="background-color: #fff;overflow: auto;clear: both;">
+                    <ul class="my_profile_nav">
+                        <li>我关注的
+                        </li>
+                        <li>我喜欢的
+                        </li>
+                        <li>我的分享
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p><span style="font-size: 16px;font-weight: bold">手机</span><span style="padding: 3px;">/</span><a href="#">通讯设备</a></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4" style="text-align: center;padding: 0">
+            <div style="height:320px;line-height:320px;position:relative;min-height: 300px;text-align: center;margin:auto">
+                <img src="<%=data.goods.url%>" alt=""/>
+            </div>
+        </div>
+        <div class="col-md-5" ng-controller="showGoodsInfoCtrl">
+            <div style="min-height: 300px;">
+                <p style="font-size: 14px;font-weight: bold;rgba(0,0,0,0.87)"><%=data.goods.name%></p>
+                <p style="font-size: 13px;font-weight: bold;color:red"><%=data.goods.descc%></p>
+                <p style="border-bottom: 1px dotted #ddd"></p>
+
+                <p style="font-size: 13px;"><span style="padding: 3px;color: rgba(0,0,0,0.56)">标准价：</span><span style="font-size: 18px;color: red">￥<%=data.goods.price%></span></p>
+                <p style="font-size: 13px;"><span style="padding: 3px;color: rgba(0,0,0,0.56)">商品描述：</span><span>好用的大屏手机</span></p>
+                <p style="font-size: 13px;"><span style="padding: 3px;color: rgba(0,0,0,0.56)">库存：</span><span>60件</span></p>
+                <p style="font-size: 13px;"><span style="padding: 3px;color: rgba(0,0,0,0.56)">已购买：</span><span>160人</span></p>
+                <p style="font-size: 13px;"><span style="padding: 3px;color: rgba(0,0,0,0.56)">标签：</span>
+                    <a href=""><%=data.goods.tag%></a>
+                </p>
+                <p style="padding-top: 10px;border-top: 1px dotted #ddd;overflow: auto;margin-top: 10px;">
+                    <span style="padding: 3px;color: #666;float: left">颜色：</span>
+                    <span style="clear: both">
+                        <em style="float:left;height: 30px;width: 30px;margin:3px;background-color: red"></em>
+                        <em style="float:left;height: 30px;width: 30px;margin:3px;background-color: blue"></em>
+                        <em style="float:left;height: 30px;width: 30px;margin:3px;background-color: orange"></em>
+                        <em style="float:left;height: 30px;width: 30px;margin:3px;background-color: green"></em>
+                        <em style="float:left;height: 30px;width: 30px;margin:3px;background-color: black"></em>
+                    </span>
+                </p>
+                <p style="clear: both;padding: 10px 0px;">
+                    <span style="padding: 3px;color: #666">数量：</span>
+                    <span>
+                        <i class="minus"></i>
+                        <input style="width: 60px;border: 1px solid #ddd;outline: none;text-align: center" value="1" type="text"/>
+                        <i class="plus"></i>
+                    </span>
+                </p>
+                <p style="clear: both;padding: 10px;">
+                    <span class="btn btn-danger btn-sm" onclick="addToShoppingCart('<%=data.goods.sha1%>')" style="margin-right: 10px;">加入购物车</span>
+                    <span class="btn btn-danger btn-sm">立刻购买</span>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div>
+                <h5 style="text-align: right">美廉美超市(西三旗) <i class="sicon-store"></i></h5>
+                <div style="text-align: center">
+                    <i class="map" style="margin-right: 10px;"></i>
+                    <i class="qcode"></i>
+                    <p>求关注</p>
+                </div>
+                <p style="font-size: 13px;"><span>店铺评分： <i class="star"></i><i class="star"></i><i class="star"></i><i class="star"></i><i class="star"></i></span></p>
+                <p style="font-size: 13px;color: rgba(0,0,0,0.87);padding: 3px;margin: 0">美的不只是商品，廉的绝对是价格。</p>
+                <p style="font-size: 13px;color: rgba(0,0,0,0.87);padding: 3px;margin: 0">联系电话：010-62306860</p>
+                <p style="font-size: 13px;color: rgba(0,0,0,0.87);padding: 3px;margin: 0"> 地址 : 北京市海淀区西三旗建材城西路28号</p>
+                <p style="text-align: center"><span class="btn btn-info">进入店铺</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 30px;padding: 0;background-color: #f5f5f5;border: 1px dotted #ddd">
+            <ul class="row goods_kit_nav" role="tablist" id="myTab1">
+                <li class="nav_active col-xs-3 col-md-2"><a href="#home1" role="tab" data-toggle="tab">商品介绍</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#profile1" role="tab" data-toggle="tab">规格参数</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#messages1" role="tab" data-toggle="tab">商品评价</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#settings1" role="tab" data-toggle="tab">售后保障</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="row">
+        <div class="col-xs-12" style="padding: 0">
+            <div style="min-height: 260px;border: 1px solid #ddd;border-top:none"></div>
+        </div>
+    </div>
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-12" style="padding: 0">
+            <div style="min-height: 500px;border: 1px solid #ddd"></div>
+        </div>
+    </div>
+    <div class="row loading-more-btn" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <span style="cursor: pointer">
+                    <i class="glyphicon glyphicon-refresh"></i>加载更多</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12" style="padding: 0">
+            <div style="border: 1px solid #ddd;min-height: 120px;"></div>
+        </div>
+    </div>
+    <div class="back-top-btn" style="display: none">
+        <p>消息</p>
+        <p onclick="bindBackTop()">顶部</p>
+    </div>
+    <div class="row" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <p class="footer-link">
+                    <a href="#">关于我们</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">在线客服</a>
+                    <a href="#">销售联盟</a>
+                </p>
+                <p class="footer-coryright">网络文化经营许可证京网文[2011]0168-061号  Copyright © 2004-2014</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

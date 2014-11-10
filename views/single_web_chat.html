@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+    <title>Single Chat</title>
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/jquery.qrcode.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+    <script type="text/javascript" src="/js/util.js"></script>
+    <script type="text/javascript" src="/socketio/socket.io-1.2.0.js"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+    <script type="text/javascript" src="/angular/angular-route.js"></script>
+
+    <script type="text/javascript">
+        var user_name = '';
+        var client = io.connect('http://127.0.0.1:8089')
+        client['user_name'] = 'chenhao';
+        // Add a connect listener
+        client.on('connect',function() {
+            console.log('Client has connected to the server!');
+        });
+        // Add a connect listener
+        client.on('message',function(data) {
+            console.log('Received a message from the server!',data);
+            $('.chat-record').append('<p>'+data+'</p>');
+        });
+        // Add a disconnect listener
+        client.on('disconnect',function() {
+            console.log('The client has disconnected!');
+        });
+        // Sends a message to the server via sockets
+        function sendMessageToServer(message) {
+            client.emit('message',message);
+
+        }
+        function  sendMessage(){
+            var chat_message = $('#send_chat_message').val();
+            sendMessageToServer(chat_message);
+        }
+
+        function setUserInfo(obj){
+            var name = $(obj).text();
+            user_name = name;
+
+        }
+
+
+    </script>
+</head>
+<body>
+<div>
+    <div class="chat-record" style="height: 300px;border: 1px solid #ddd;width: 400px;">
+
+    </div>
+
+    <span onclick="setUserInfo(this)" class="btn btn-small">tester1</span>
+    <span onclick="setUserInfo(this)" class="btn btn-small">tester2</span>
+    <input id="send_chat_message" type="text"/>
+    <span onclick="sendMessage()" class="btn btn-default">发送</span>
+
+</div>
+
+</body>
+</html>

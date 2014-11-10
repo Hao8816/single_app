@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Single Search</title>
+    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/headroom.js"></script>
+    <script type="text/javascript" src="/lib/jQuery.headroom.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+
+    <link rel="stylesheet" href="/single/media/style/single_index.css"/>
+    <script type="text/javascript" src="/single/media/js/single_index.js"></script>
+    <style type="text/css">
+        .reslut_goods{
+
+        }
+        .reslut_goods .goods{
+            min-height: 200px;
+        }
+        .reslut_goods .goods:hover{
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+<header id="header" data-headroom class="container-fluid animated">
+    <div class="row" style="background-color:rgba(48, 63, 159, 0.87);padding: 8px 10px;color: #fff;">
+        <div class="col-xs-6 col-sm-5 col-md-4">
+            <img src="/images/single_logo.ico" alt=""/>
+            <a href="/single/index/" style="color: #ffffff">首页</a>
+        </div>
+        <div class="col-xs-6 col-sm-7 col-md-8" style="text-align: right">
+            <span class="nav-item" onclick="reditectShoppingCartPage()"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</span>
+            <span class="nav-item">我的订单</span>
+            <span class="nav-item">我的帐号</span>
+            <span class="nav-item"><i class="glyphicon glyphicon-map-marker"></i>我的位置[北京]</span>
+        </div>
+    </div>
+</header>
+<div class="container" id="root-view-container" style="min-height: 1700px;">
+    <div class="row">
+        <div class="col-xs-12 col-md-3" style="height: 40px;">
+
+        </div>
+    </div>
+    <div class="row" style="background: #fff;padding: 20px 0px;">
+        <div class="col-xs-12 col-md-3" style="height: 36px;">
+
+        </div>
+        <div class="col-xs-7 col-sm-8 col-md-6" style="min-height: 36px;">
+            <div class="input-group">
+                <input style="box-shadow: none" type="text" class="form-control">
+                <span class="input-group-addon">搜索</span>
+            </div>
+        </div>
+        <div class="col-xs-5 col-sm-4 col-md-3" style="min-height: 36px;">
+            <div style="padding: 5px;text-align: right">
+                <span class="nav-kit-item">
+                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                    <a>我的购物车</a></span>
+                <span class="nav-kit-item">
+                    <i class="glyphicon glyphicon-heart"></i>
+                    <a>我的心愿单</a></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4 col-sm-3 col-md-2" style="background-color: #fafafa;min-height: 400px;">
+            <div style="border: 1px solid #ccc;min-height: 400px;">
+                <p style="padding: 8px 15px;font-weight: bold;background: #dddddd;margin: 0;text-align: center">全部分类</p>
+
+            </div>
+        </div>
+        <div class="col-xs-8 col-sm-9 col-md-10" style="background: #f5f5f5;min-height: 400px;">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="border: 1px dotted #ddd">
+                        <div class="row result-item" >
+                            <div class="col-md-2 title">商品类型</div>
+                            <div class="col-md-10 item">11</div>
+                        </div>
+                        <div class="row result-item">
+                            <div>
+                                <div class="col-md-2 title">价格区间</div>
+                                <div class="col-md-10 item">2</div>
+                            </div>
+                        </div>
+                        <div class="row result-item">
+                            <div class="col-md-2 title">店铺距离</div>
+                            <div class="col-md-10 item">2</div>
+                        </div>
+                        <div class="row result-item">
+                            <div class="col-md-2 title">商家时间</div>
+                            <div class="col-md-10 item"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row reslut_goods" style="min-height: 500px;border: 1px solid #ddd;">
+                        <div class="col-xs-4 col-sm-3 col-md-3 goods">
+                            <div style="border: 1px solid #eee">1</div>
+                        </div>
+                        <div class="col-xs-4 col-sm-3 col-md-3 goods">
+                            <div style="border: 1px solid #eee">2</div>
+                        </div>
+                        <div class="col-xs-4 col-sm-3 col-md-3 goods">
+                            <div style="border: 1px solid #eee">3</div>
+                        </div>
+                        <div class="col-xs-4 col-sm-3 col-md-3 goods">
+                            <div style="border: 1px solid #eee">4</div>
+                        </div>
+                        <div class="col-xs-4 col-sm-3 col-md-3 goods">
+                            <div style="border: 1px solid #eee">5</div>
+                        </div>
+                        <div class="col-xs-4 col-sm-3 col-md-3 goods">
+                            <div style="border: 1px solid #eee">6</div>
+                        </div>
+                        <div class="col-xs-4 col-sm-3 col-md-3 goods">
+                            <div style="border: 1px solid #eee">7</div>
+                        </div>
+                        <div class="col-xs-4 col-sm-3 col-md-3 goods">
+                            <div style="border: 1px solid #eee">8</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-12">
+            <div style="min-height: 30px;border: 1px solid #eee;background-color: #f5f5f5"></div>
+        </div>
+        <div class="col-xs-12">
+            <div>
+            </div>
+        </div>
+    </div>
+    <div class="row loading-more-btn" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <span style="cursor: pointer">
+                    <i class="glyphicon glyphicon-refresh"></i>加载更多</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="border: 1px solid #ddd;min-height: 120px;"></div>
+        </div>
+    </div>
+    <div class="back-top-btn" style="display: none">
+        <p>消息</p>
+        <p onclick="bindBackTop()">顶部</p>
+    </div>
+    <div class="row" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <p class="footer-link">
+                    <a href="#">关于我们</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">在线客服</a>
+                    <a href="#">销售联盟</a>
+                </p>
+                <p class="footer-coryright">网络文化经营许可证京网文[2011]0168-061号  Copyright © 2004-2014</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

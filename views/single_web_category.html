@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Single Category</title>
+    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/headroom.js"></script>
+    <script type="text/javascript" src="/lib/jQuery.headroom.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+
+    <link rel="stylesheet" href="/style/single_index.css"/>
+    <script type="text/javascript" src="/js/single_index.js"></script>
+    <style type="text/css">
+        .reslut_goods{
+
+        }
+        .reslut_goods .goods{
+            min-height: 200px;
+            border-right: 1px dotted #ddd;
+            border-bottom: 1px dotted #ddd;
+        }
+        .reslut_goods .goods:hover{
+            background-color: #eee;
+        }
+        .category_item_nav{
+            margin: 0;
+            padding: 0;
+        }
+        .category_item_nav .nav-active{
+            background-color: #f5f5f5;
+
+        }
+        .category_item_nav .nav-active::before{
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid #09c;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+        }
+        .category_item_nav li{
+            list-style: none;
+            border-bottom: 1px solid #eee;
+            padding:30px 5px;
+        }
+        .category_item_nav li:hover{
+            background-color: #f5f5f5;
+            cursor: pointer;
+        }
+        .store_goods_nav{
+            margin: 0;
+            padding: 0;
+        }
+        .store_goods_nav li{
+            list-style: none;
+            padding:10px;
+            border-bottom: 1px dotted #eee;
+        }
+        .store_goods_nav .nav-item{
+            font-size: 13px;
+            color: #333;
+        }
+        .store_goods_nav .nav-item a{
+            padding: 3px 10px;
+            font-size: 13px;
+            color:#666;
+        }
+        .category-item .name{
+            color: #09c;
+            font-size: 12px;
+            text-overflow: ellipsis;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .category-item .desc{
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .category-item{
+            margin: 1px;
+            cursor: pointer;
+            border: 1px solid #eee;
+            height: 310px;
+        }
+        .category-item:hover{
+           box-shadow: 1px 1px 5px 0px #09c;
+        }
+        .category-item img{
+            margin: auto;
+        }
+        .category-item .price{
+            color: red;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .category-item .desc {
+            text-overflow: ellipsis;
+
+        }
+        .category-item .price,
+        .category-item .name,
+        .category-item .shop,
+        .category-item .desc{
+            padding: 0 5px;
+            margin: 0;
+        }
+
+    </style>
+    <script type="text/javascript">
+
+        function showCategoryCtrl($scope,$http) {
+            $http.post('/ajax/get_category_good_list/').success(function (data) {
+                if (data['ret'] == '0001') {
+                    console.log(data);
+                    $scope.categorys = data['goods']
+                } else {
+
+                }
+            });
+        }
+
+        $(function(){
+           $('.category_item_nav li').click(function(){
+               $('.nav-active').removeClass('nav-active');
+               $(this).addClass('nav-active');
+           });
+
+        });
+    </script>
+</head>
+<body>
+<header id="header" data-headroom class="container-fluid animated">
+    <div class="row" style="background-color:rgba(48, 63, 159, 0.87);padding: 8px 10px;color: #fff;">
+        <div class="col-xs-6 col-sm-5 col-md-4">
+            <img src="/images/single_logo.ico" alt=""/>
+            <a href="/single/index/" style="color: #ffffff">首页</a>
+        </div>
+        <div class="col-xs-6 col-sm-7 col-md-8" style="text-align: right">
+            <span class="nav-item" onclick="reditectShoppingCartPage()"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</span>
+            <span class="nav-item">我的订单</span>
+            <span class="nav-item">我的帐号</span>
+            <span class="nav-item"><i class="glyphicon glyphicon-map-marker"></i>我的位置[北京]</span>
+        </div>
+    </div>
+</header>
+<div class="container" id="root-view-container" style="min-height: 1700px;">
+    <div class="row">
+        <div class="col-xs-12 col-md-3" style="height: 40px;">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div style="padding: 15px 0px 5px 0px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <div style="text-align: center;padding: 5px 0px;">
+                            商品搜索
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8">
+                        <div style="background-color:#fff;border:1px solid #ddd;overflow: auto;border-radius: 2px;">
+                            <input ng-model="query" class="form-control input-sm" style="float:left;width: 80%;box-shadow: none;border: none" placeholder="商品名称" type="text"/>
+                            <span style="font-size:13px;float: right;padding: 6px 13px;border-left:1px solid #ddd;background-color: #f5f5f5">搜索</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 13px;padding: 10px 3px;margin: 0"><span>关键词：</span>
+                    <a href=""> Nike </a>
+                    <a href=""> LiNing </a>
+                    <a href=""> BWM </a>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div style="padding:0px;">
+                <div class="my_profile">
+                    <img class="head_image" src="/images/icons/default_head_image.png" alt=""/>
+                    <p class="profile_info">
+                        <span class="name">chenhao8816</span>
+                    </p>
+                    <p class="account_info">
+                        <span class="account">账户余额：<a href="">$500</a></span>
+                    </p>
+                </div>
+                <div style="background-color: #fff;overflow: auto;clear: both;">
+                    <ul class="my_profile_nav">
+                        <li>我关注的
+                        </li>
+                        <li>我喜欢的
+                        </li>
+                        <li>我的分享
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-12 col-sm-2 col-md-2" style="padding: 0;border-left: 1px solid #eee">
+            <h4 style="background-color: #eee;padding: 10px;margin: 0">服装</h4>
+            <ul class="row category_item_nav">
+                <li class="nav-active"><img src="/style/images/number.png">户外</li>
+                <li><img src="/style/images/number2.png">体闲</li>
+                <li><img src="/style/images/number3.png">运动</li>
+                <li><img src="/style/images/number4.png">时尚</li>
+                <li><img src="/style/images/number5.png">年青</li>
+                <li><img src="/style/images/number6.png"></li>
+                <li><img src="/style/images/number7.png"></li>
+                <li><img src="/style/images/number8.png"></li>
+                <li><img src="/style/images/number9.png"></li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-sm-10 col-md-10" style="min-height: 400px;padding: 0;border: 1px solid #ddd;border-top-color: #f5f5f5">
+            <ul class="store_goods_nav">
+                <li class="nav-item"><span>类别：</span>
+                    <a href="">休闲食品</a>
+                    <a href="">饼干糕点</a>
+                    <a href="">糖果</a>
+                    <a href="">冲调食品</a>
+                    <a href="">营养保健品</a>
+                    <a href="">饮料</a>
+                    <a href="">酒类</a>
+                    <a href="">调味制品</a>
+                    <a href="">土产干货</a>
+                </li>
+                <li class="nav-item"><span>区域：</span>
+                    <a href="">东城区</a>
+                    <a href="">西城区</a>
+                    <a href="">朝阳区</a>
+                    <a href="">海淀区</a>
+                    <a href="">昌平区</a>
+                    <a href="">大兴区</a>
+                    <a href="">怀柔区</a>
+                </li>
+            </ul>
+            <div class="row">
+                <div class="col-xs-12" ng-controller="showCategoryCtrl">
+                    <div class="reslut_goods" style="min-height: 800px;">
+                        <div style="padding: 0px" ng-repeat="category in categorys | filter:query" class="col-xs-4 col-sm-3 col-md-3">
+                            <div class="category-item">
+                                <img class="img-responsive" ng-src="{{category.url}}" alt=""/>
+                                <p class="price">￥{{category.price}}</p>
+                                <p class="name">{{category.name}}</p>
+                                <p class="desc">{{category.descc}}</p>
+                                <p class="shop"><a href="" style="font-size: 12px;color: #666">{{category.shop_name}}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-12" style="padding: 0">
+            <div style="border: 1px solid #eee;background-color: #f5f5f5;min-height: 500px;"></div>
+        </div>
+        <div class="col-xs-12">
+            <div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12" style="padding: 0">
+            <div style="border: 1px solid #ddd;min-height: 120px;"></div>
+        </div>
+    </div>
+    <div class="back-top-btn" style="display: none">
+        <p>消息</p>
+        <p onclick="bindBackTop()">顶部</p>
+    </div>
+    <div class="row" style="height:30px;">
+        <div class="col-xs-12" style="padding: 0">
+            <div style="padding: 3px;text-align: center;">
+                <p class="footer-link">
+                    <a href="#">关于我们</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">在线客服</a>
+                    <a href="#">销售联盟</a>
+                </p>
+                <p class="footer-coryright">网络文化经营许可证京网文[2011]0168-061号  Copyright © 2004-2014</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
