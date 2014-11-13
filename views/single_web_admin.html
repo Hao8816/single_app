@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html ng-app = "manager">
+<head>
+    <title>Single Category</title>
+    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/jquery.qrcode.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+    <script type="text/javascript" src="/js/util.js"></script>
+
+    <!--引入百度地图的api js-->
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ssFFOv2Qvxp2U4HVmSF0fRxo"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+    <script type="text/javascript" src="/angular/angular-route.js"></script>
+    <style type="text/css">
+        .admin-nav{
+            margin: 0;
+            padding: 0;
+        }
+        .admin-nav li{
+            font-size: 14px;
+            padding: 1px;
+            list-style-type: none;
+            text-align: center;
+            cursor: pointer;
+        }
+        .admin-nav li a{
+            display: inline-block;
+            height: 80px;
+            line-height: 80px;
+            color: rgba(255,255,255,0.87);
+            text-decoration: none;
+         }
+        .admin-nav li:hover{
+            background:rgba(0,0,0,0.26);
+        }
+        .admin-nav .nav-active{
+            position: relative;
+        }
+        .admin-nav .nav-active:before{
+            border-right: 10px solid #fff;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            content: '';
+            position: absolute;
+            right: 0px;
+            top: 40%;
+        }
+        .manage-shop-nav{
+            overflow: auto;
+            background-color: #2980B9;
+            padding: 0;
+            margin-top: 0px;
+            color: #fff;
+        }
+
+        .manage-shop-nav li{
+            float: left;
+            width: 80px;
+            padding:10px;
+            list-style: none;
+            text-align: center;
+        }
+        .manage-shop-nav .nav-item{
+            float: left;
+            width: 120px;
+            padding:10px;
+            list-style: none;
+            position: relative;
+            background-color:#3498DB;
+            margin-right:16px;
+            text-align: center;
+            cursor: pointer;
+            color: #fff;
+        }
+        .manage-shop-nav .nav-item:hover{
+            opacity: 0.9;
+            color: #ddd;
+        }
+        .manage-shop-nav .nav-item::before{
+            content: "";
+            position: absolute;
+            top: 0%;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-left: 1em solid;
+            right: -14px;
+        }
+
+        .manage-shop-nav .nav-item::before{
+            border-left-color: #3498DB;
+        }
+        .manage-shop-nav .nav-item::after {
+            border-left-color: #3498DB;
+        }
+        .manage-shop-nav .nav-item::after{
+            content: "";
+            position: absolute;
+            top: 0%;
+            border-top: 20px solid #3498DB;
+            border-bottom: 20px solid #3498DB;
+            border-left: 1em solid transparent;
+            left: -14px;
+        }
+
+    </style>
+    <script type="text/javascript">
+        $(function(){
+            window.onscroll = function(){
+                var document_height = $('.admin-view-container').height();
+                if ($('.admin-nav-bar') != document_height){
+                    $('.admin-nav-bar').css('height',document_height+'px');
+                }
+            };
+        });
+        // 切换管理模块
+        function changeAdminNavItem(nav_type){
+            $('.admin-nav-bar').find('.nav-active').removeClass('nav-active');
+            $('.admin-nav-bar').find('.admin-nav li').eq(nav_type).addClass('nav-active');
+        }
+
+        function  storeManager($scope){
+            for (var city_code in city_name_dict){
+                var city_name = city_name_dict[city_code];
+                $('.position-select').find('select[name="city"]').append('<option value='+city_code+'>'+city_name+'</option>');
+            }
+            console.log('this is store manage');
+        }
+
+        //
+        function checkCountyOfCityCode(obj){
+            var city_code = $(obj).find('option:selected').attr('value');
+            var county_list = city_county_dict[city_code];
+            $('.position-select').find('select[name="county"]').empty();
+            for(var i=0;i<county_list.length;i++){
+                $('.position-select').find('select[name="county"]').append('<option value='+city_code+'>'+county_list[i]+'</option>');
+            }
+        }
+
+        function goodsManager($scope){
+
+        }
+        function serviceManager($scope){
+
+        }
+        function complainManager($scope){
+
+        }
+        function orderManager($scope){
+
+        }
+
+        angular.module('manager',['ngRoute']).
+                config(['$routeProvider',function($routeProvider){
+                    $routeProvider.
+                    when('/store/',{
+                        templateUrl:'/admin/store_manage/',
+                        controller:storeManager
+                    }).
+                    when('/goods/',{
+                        templateUrl:'/admin/goods_manage/',
+                        controller:goodsManager
+                    }).
+                    when('/service/',{
+                        templateUrl:'/admin/service_manage/',
+                        controller:serviceManager
+                    }).
+                    when('/complain/',{
+                        templateUrl:'/admin/complain_manage/',
+                        controller:complainManager
+                    }).
+                    when('/order/',{
+                        templateUrl:'/admin/order_manage/',
+                        controller:orderManager
+                    }).
+                    otherwise({redirectTo:'/'});
+
+                }]);
+    </script>
+</head>
+<body>
+
+<header id="header" data-headroom class="container-fluid animated">
+    <div class="row" style="background-color:#303f9f;padding:30px 10px;color: #fff;">
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <span style="font-weight: bold"><img style="margin-right: 5px;" src="/images/single_logo.ico" alt=""/>Admin</span>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-3"></div>
+        <div class="col-xs-6 col-sm-6 col-md-5" style="text-align: right">
+            <span class="nav-item">消息中心</span>
+            <span class="nav-item">任务中心</span>
+            <span class="nav-item">我的帐号</span>
+        </div>
+    </div>
+</header>
+<div class="container-fluid" style="height:700px;">
+    <div class="row">
+        <div class="col-md-1 admin-nav-bar" style="height:700px;background: rgba(0,0,0,0.54);padding: 0">
+            <div style="height: 30px;padding: 5px 10px;color:rgba(0, 0, 0, 0.87);background-color: #c5cae9">
+                <i class="glyphicon glyphicon-list"></i> 功能导航
+            </div>
+            <ul class="admin-nav">
+                <li onclick="changeAdminNavItem(0)" class="nav-active"><a href="#/store/">店铺管理</a></li>
+                <li onclick="changeAdminNavItem(1)"><a href="#/goods/">商品管理</a></li>
+                <li onclick="changeAdminNavItem(2)"><a href="#/order/">订单管理</a></li>
+                <li onclick="changeAdminNavItem(3)"><a href="#/service/">售后管理</a></li>
+                <li onclick="changeAdminNavItem(4)"><a href="#/complain/">投诉管理</a></li>
+            </ul>
+            <div id="qcode"> </div>
+        </div>
+        <div ng-view class="col-md-11 admin-view-container" style="height:auto;background: #fff;padding: 0">
+            <!--<div style="background-color:#fff;height: 600px;">
+                <ul class="manage-shop-nav" style="width: 700px">
+                    <li><i class="glyphicon glyphicon-home"></i>首页</li>
+                    <li class="nav-item">1 添加店铺</li>
+                    <li class="nav-item">2 添加分类</li>
+                    <li class="nav-item">3 添加商品</li>
+                    <li class="nav-item">完成</li>
+                </ul>
+            </div>-->
+        <div>
+    </div>
+</div>
+</body>
+</html>

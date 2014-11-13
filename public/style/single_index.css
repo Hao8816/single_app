@@ -1,0 +1,181 @@
+.my_profile_nav{
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+.my_profile_nav li{
+    float: left;
+    width: 33%;
+    list-style: none;
+    text-align: center;
+    padding: 8px 0px;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius:5px;
+}
+.my_profile_nav li:hover{
+    background-color: #f5f5f5;
+}
+.my_profile_nav li:last-child{
+    border-right: none;
+}
+.my_profile_nav li .title{
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+.my_profile{
+    padding: 8px 15px;
+    overflow: auto;
+}
+.my_profile .head_image{
+    float: right;
+    height: 35px;
+    width: 35px;
+}
+.my_profile .profile_info{
+    width: 80%;
+    text-align: right;
+    padding: 0px;
+    margin: 0;
+
+}
+.my_profile .profile_info .name{
+    padding: 5px;
+    color: #999;
+}
+
+.my_profile .account_info{
+    width: 80%;
+    text-align: right;
+    padding: 0px;
+    margin: 0;
+}
+.my_profile .account_info .account{
+    padding: 5px;
+    color: #999;
+}
+
+.nav-kit{
+    margin: 0;
+    padding: 0;
+}
+.nav-kit li{
+    list-style: none;
+    padding: 13px 20px;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #eee;
+    cursor: pointer;
+    font-size:13px;
+    box-shadow:-1px 1px 1px 1px #eee;
+    margin-top: 2px;
+}
+.nav-kit li:hover{
+    transform:rotate(6deg);
+    -ms-transform:rotate(6deg); /* Internet Explorer */
+    -moz-transform:rotate(6deg); /* Firefox */
+    -webkit-transform:rotate(6deg); /* Safari 和 Chrome */
+    -o-transform:rotate(6deg); /* Opera */
+    background-color: #eeeeee;
+}
+.nav-kit .nav-active{
+    transform:rotate(6deg);
+    -ms-transform:rotate(6deg); /* Internet Explorer */
+    -moz-transform:rotate(6deg); /* Firefox */
+    -webkit-transform:rotate(6deg); /* Safari 和 Chrome */
+    -o-transform:rotate(6deg); /* Opera */
+    background-color: #eeeeee;
+
+}
+.nav-kit-item{
+    padding: 3px 8px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+.nav-kit-item:hover{
+    background-color: #eee;
+}
+.nav-kit-item a{
+    text-decoration: none;
+    color: #999;
+    text-overflow: ellipsis;
+    width: 120px;
+    overflow: hidden;
+}
+
+
+
+
+
+.location_nav{
+    padding: 0;
+    margin: 0;
+}
+.location_nav li{
+    margin: 5px;
+    padding: 5px;
+    list-style: none;
+    float: left;
+    width: 53px;
+    text-align: center;
+    opacity: 0.8;
+    font-size: 13px;
+    cursor: pointer;
+}
+.location_nav li:hover{
+    opacity: 1;
+    color: #09c;
+
+}
+.location_label .label{
+    cursor: pointer;
+    font-weight: normal;
+}
+.location_tool .tool{
+    padding: 2px 8px;
+    cursor: pointer;
+    display: inline-block;
+    opacity: 0.8;
+}
+.location_tool .tool:hover{
+    opacity: 1;
+    color: #09c;
+}
+
+.ad-item-outter{
+    padding: 0px;
+    border: 1px solid #ddd;
+    margin: -1px -1px 0px 0px;
+    background: #fff
+}
+.ad-item{
+    position: relative;
+    cursor: pointer;
+    height: 270px;
+}
+.ad-item img{
+    margin: auto;
+}
+.ad-item:hover{
+    box-shadow: 1px 1px 1px 1px #09c;
+}
+.ad-item .ad-title{
+    margin: 0;
+    text-align: left;
+    padding: 0px 3px;
+    color: #09c;
+    font-size: 12px;
+}
+.ad-item .ad-desc{
+    text-align: left;
+    font-size: 12px;
+    color: #999;
+    /*position: absolute;
+    background-color:#333;
+    color: #fff;*/
+    top: 0px;
+    width: 100%;
+    padding: 3px;
+}

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Single Store</title>
+    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/headroom.js"></script>
+    <script type="text/javascript" src="/lib/jQuery.headroom.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+
+    <link rel="stylesheet" href="/style/single_index.css"/>
+    <script type="text/javascript" src="/js/single_index.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('.store_kit_nav li').click(function(){
+                $('.nav_active').removeClass('nav_active');
+                $(this).addClass('nav_active');
+            })
+        })
+    </script>
+    <style type="text/css">
+        .store_push{
+            margin: 0;
+            padding: 0;
+
+        }
+        .store_push li{
+            height: 65px;
+            width: 65px;
+            float: left;
+            margin: 3px 0px 3px 3px;
+            border:1px solid #eee ;
+            list-style: none;
+            text-align: center;
+            cursor: pointer;
+        }
+        .store_push li:hover{
+            background-color: #f5f5f5;
+        }
+        .store_kit_nav{
+            margin: 0;
+            padding: 0;
+            border: 1px dotted #ddd;
+            border-bottom: none;
+        }
+        .store_kit_nav li{
+            float: left;
+            width: 20%;
+            text-align: center;
+            list-style: none;
+            cursor: pointer;
+            background-color: #f5f5f5;
+        }
+        .store_kit_nav li:hover{
+            color: #333;
+        }
+        .store_kit_nav li a{
+            width: 100%;
+            float: left;
+            text-decoration: none;
+            padding: 5px 0px;
+        }
+        .store_kit_nav .nav_active{
+            background-color: #fff;
+            border-bottom: none;
+        }
+        .store_kit_nav .nav_active a{
+            color: #333;
+        }
+        .store_goods_nav{
+            margin: 0;
+            padding: 0;
+        }
+        .store_goods_nav li{
+            list-style: none;
+            padding:10px 15px;
+            border-bottom: 1px dotted #ddd;
+        }
+        .store_goods_nav li:last-child{
+            border-bottom:none;
+        }
+        .store_goods_nav .nav-item{
+            font-size: 13px;
+            color: #333;
+        }
+        .store_goods_nav .nav-item a{
+            padding: 3px 10px;
+            font-size: 13px;
+            color:#666;
+        }
+    </style>
+</head>
+<body>
+<header id="header" data-headroom class="container-fluid animated">
+    <div class="row" style="background-color:rgba(48, 63, 159, 0.87);padding: 8px 10px;color: #fff;">
+        <div class="col-xs-6 col-sm-5 col-md-4">
+            <span class="nav-item">
+                <img src="/images/single_logo.ico" alt=""/>
+                <a href="/single/index/" style="color: #ffffff">首页</a>
+             </span>
+        </div>
+        <div class="col-xs-6 col-sm-7 col-md-8" style="text-align: right">
+            <span class="nav-item" onclick="reditectShoppingCartPage()"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</span>
+            <span class="nav-item">我的订单</span>
+            <span class="nav-item">我的帐号</span>
+            <span class="nav-item"><i class="glyphicon glyphicon-map-marker"></i>我的位置[北京]</span>
+        </div>
+    </div>
+</header>
+<div class="container" id="root-view-container" style="min-height: 1700px;">
+    <div class="row">
+        <div class="col-xs-12 col-md-3" style="height: 60px;">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <div style="padding: 10px 1px;">
+                <div class="row">
+                    <div class="col-xs-2 col-md-3">
+                        <div style="text-align: center;padding: 5px 0px;">
+                            店内搜索
+                        </div>
+                    </div>
+
+                    <div class="col-xs-9 col-md-8" style="padding: 0">
+                        <div style="background-color:#fff;border:1px solid #ddd;overflow: auto;border-radius: 2px;">
+                            <input class="form-control input-sm" style="float:left;width: 80%;box-shadow: none;border: none" placeholder="商品名称" type="text">
+                            <span style="font-size:13px;float: right;padding: 6px 13px;border-left:1px solid #ddd;background-color: #f5f5f5">搜索</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 12px;padding: 10px 3px;"><span>关键词：</span>
+                    <a href=""> Nike </a>
+                    <a href=""> LiNing </a>
+                    <a href=""> BWM </a>
+                </p>
+                <div>
+                    <p>店铺推荐：</p>
+                    <ul class="store_push">
+                        <li>2</li>
+                        <li>3</li>
+                        <li>4</li>
+                        <li>5</li>
+                        <li>6</li>
+                        <li>7</li>
+                        <li>8</li>
+                        <li>9</li>
+                        <li>10</li>
+                    </ul>
+                    <p style="clear: both"></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div style="height: 175px;position: relative">
+                <h4>美廉美超市(西三旗)</h4>
+                <p style="color: #666;padding: 3px;margin: 0"> 地址 : 北京市海淀区西三旗建材城西路28号</p>
+                <p style="color: #666;padding: 3px;margin: 0">联系电话：010-62306860</p>
+                <p style="color: #666;padding: 3px;margin: 0">美的不只是商品，廉的绝对是价格。</p>
+                <div style="position: absolute;right: 15px;top: 0px">
+                    <i class="qcode"></i>
+                    <p style="text-align:center">求关注</p>
+                </div>
+                <div style="padding: 3px">
+                    <span>店铺评分： <i class="star"></i><i class="star"></i><i class="star"></i><i class="star"></i><i class="star"></i></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <ul  class="row store_kit_nav" role="tablist" id="myTab1">
+                <li class="nav_active col-xs-3 col-md-2"><a href="#home1" role="tab" data-toggle="tab">食品区</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#profile1" role="tab" data-toggle="tab">日用品</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#messages1" role="tab" data-toggle="tab">服装区</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#settings1" role="tab" data-toggle="tab">家用电器</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#settings2" role="tab" data-toggle="tab">日用百货</a></li>
+            </ul>
+            <div style="min-height: 100px;border: 1px dotted #eee">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home1">
+                        <ul class="store_goods_nav">
+                            <li class="nav-item"><span>类别：</span>
+                                <a href="">休闲食品</a>
+                                <a href="">饼干糕点</a>
+                                <a href="">糖果</a>
+                                <a href="">冲调食品</a>
+                                <a href="">营养保健品</a>
+                                <a href="">饮料</a>
+                                <a href="">酒类</a>
+                                <a href="">调味制品</a>
+                                <a href="">土产干货</a>
+                            </li>
+                            <li class="nav-item"><span>保质期：</span>
+                                <a href=""><1个月</a>
+                                <a href="">3个月</a>
+                                <a href="">6个月</a>
+                                <a href="">1年</a>
+                                <a href="">18个月</a>
+                                <a href="">2年</a>
+                                <a href="">3年</a>
+                            </li>
+                            <li class="nav-item"><span>价格：</span>
+                                <a href=""><10元</a>
+                                <a href="">10~20元</a>
+                                <a href="">21~50元</a>
+                                <a href="">51~100元</a>
+                                <a href="">101~200元</a>
+                                <a href="">>200元</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" id="profile1">
+                        <ul class="store_goods_nav">
+                            <li class="nav-item"><span>类别：</span>
+                                <a href="">个人洁护</a>
+                                <a href="">家用清洁</a>
+                                <a href="">家用纸品类</a>
+                                <a href="">冲调食品</a>
+                                <a href="">服装服饰</a>
+                                <a href="">床上用品</a>
+                                <a href="">鞋帽类</a>
+                                <a href="">制品</a>
+                                <a href="">休闲用品</a>
+                                <a href="">箱包皮具</a>
+                            </li>
+                            <li class="nav-item"><span>价格：</span>
+                                <a href=""><10元</a>
+                                <a href="">10~20元</a>
+                                <a href="">21~50元</a>
+                                <a href="">51~100元</a>
+                                <a href="">101~200元</a>
+                                <a href="">>200元</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane" id="messages1">3</div>
+                    <div class="tab-pane" id="settings1">4</div>
+                    <div class="tab-pane" id="settings2">5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-12">
+            <div style="clear: both;min-height: 800px;border: 1px solid #eee"></div>
+        </div>
+    </div>
+
+    <div class="row loading-more-btn" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <span style="cursor: pointer">
+                    <i class="glyphicon glyphicon-refresh"></i>加载更多</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="border: 1px solid #ddd;min-height: 120px;"></div>
+        </div>
+    </div>
+    <div class="back-top-btn" style="display: none">
+        <p>消息</p>
+        <p onclick="bindBackTop()">顶部</p>
+    </div>
+    <div class="row" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <p class="footer-link">
+                    <a href="#">关于我们</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">在线客服</a>
+                    <a href="#">销售联盟</a>
+                </p>
+                <p class="footer-coryright">网络文化经营许可证京网文[2011]0168-061号  Copyright © 2004-2014</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

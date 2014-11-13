@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Single Location</title>
+    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/headroom.js"></script>
+    <script type="text/javascript" src="/lib/jQuery.headroom.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+
+    <link rel="stylesheet" href="/style/single_location.css"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ssFFOv2Qvxp2U4HVmSF0fRxo"></script>
+    <script type="text/javascript" src="/js/single_location.js"></script>
+    <style type="text/css">
+        .location_nav{
+            padding: 0;
+             margin: 0;
+        }
+        .location_nav li{
+            margin: 5px;
+            padding: 5px;
+            list-style: none;
+            float: left;
+            width: 53px;
+            text-align: center;
+            opacity: 0.8;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .location_nav li:hover{
+            opacity: 1;
+            color: #09c;
+
+        }
+        .location_label .label{
+            cursor: pointer;
+            font-weight: normal;
+        }
+       .location_tool .tool{
+           padding: 2px 8px;
+           cursor: pointer;
+           display: inline-block;
+           opacity: 0.8;
+       }
+       .location_tool .tool:hover{
+           opacity: 1;
+           color: #09c;
+       }
+       .location_result_nav{
+           margin: 0;
+           padding: 0;
+       }
+        .location_result_nav li{
+            list-style: none;
+            background-color: #fefefe;
+            box-shadow: 1px 1px 1px 1px #ccc;
+            cursor: pointer;
+        }
+        .location_result_nav li:hover{
+            background-color: #f5f5f5;
+        }
+        .pager-item .prev,.pager-item .center,.pager-item .next{
+            display: inline-block;
+            width: 32%;
+            cursor: pointer;
+        }
+        .pager-item .next{
+            text-align: right;
+        }
+        .pager-item .next:hover,.pager-item .prev:hover{
+            color: #09c;
+        }
+        .pager-item .center{
+            text-align: center;
+        }
+
+        .result-item{
+            padding: 2px 10px;
+            margin: 0;
+        }
+        .result-item .item-line{
+            margin: 0;
+            padding: 3px;
+            font-size: 12px;
+        }
+        .result-item .title{
+            font-size: 13px;
+            color: rgba(0,0,0,0.87);
+        }
+        .result-item .address,.result-item .phone{
+            font-size: 12px;
+            color: rgba(0,0,0,0.56);
+        }
+    </style>
+</head>
+<body>
+<header id="header" data-headroom class="container-fluid animated">
+    <div class="row" style="background-color:#000;opacity:0.7;padding: 8px 10px;color: #fff;">
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <span><i class="glyphicon glyphicon-map-marker"></i>我的位置[北京]</span>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-3"></div>
+        <div class="col-xs-6 col-sm-6 col-md-5" style="text-align: right">
+            <span class="nav-item"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</span>
+            <span class="nav-item">我的订单</span>
+            <span class="nav-item">我的帐号</span>
+        </div>
+    </div>
+</header>
+<div class="container-fluid" id="root-view-container" style="min-height: 1500px;" ng-controller="searchLocation">
+    <div class="row">
+        <div style="height: 36px;"></div>
+    </div>
+    <div class="row" style="border-bottom: 1px solid #ddd;border-top: 1px solid #ddd;padding-bottom: 10px;">
+        <div class="col-xs-12 col-sm-6 col-md-6" style="min-height: 400px;padding: 0px">
+            <p style="padding: 8px 15px;margin: 0;">全部分类</p>
+            <div class="row">
+                <div class="col-xs-2 col-md-1"></div>
+                <div class="col-xs-12 col-md-10">
+                    <div style="background-color:#fff;border:1px solid #ddd;overflow: auto;border-radius: 2px;">
+                        <input ng-keydown="searchByKeyWordsKeyDown(event,key_word)" ng-model="key_word" id="location_search_box" class="form-control input-sm" style="float:left;width: 80%;box-shadow: none;border: none" placeholder="商品名称" type="text"/>
+                        <span ng-click="searchByKeyWords(key_word)" style="cursor:pointer;font-size:13px;float: right;padding: 6px 13px;border-left:1px solid #ddd;background-color: #f5f5f5">搜索</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="min-height: 400px;">
+                        <div class="pager-item" style="background-color: #eee;padding: 5px;font-size: 13px;">
+                            <span class="prev">上一页</span>
+                            <span class="center">{{page_index+1}}/{{total_pages}}</span>
+                            <span class="next"><a ng-bind="next_link">下一页</a></span>
+                        </div>
+                        <ul id="search-result" class="location_result_nav" style="min-height: 740px;">
+                            <li class="result-item" ng-repeat="result_item in result_items">
+                                <p class="item-line">
+                                    <span></span>
+                                    <span class="title" ng-bind="result_item.title"></span>
+                                    <span></span>
+                                </p>
+                                <p class="item-line">
+                                    <span>地址：</span>
+                                    <span class="address" ng-bind="result_item.address "></span>
+                                </p>
+                                <p class="item-line">
+                                    <span>电话：</span>
+                                    <span class="phone"ng-bind="result_item.phoneNumber"></span>
+                                </p>
+                            </li>
+                        </ul>
+                        <div class="pager-item" style="background-color: #eee;padding: 5px;font-size: 13px;">
+                            <span class="prev">上一页</span>
+                            <span class="center">{{page_index+1}}/{{total_pages}}</span>
+                            <span class="next"><a ng-bind="next_link">下一页</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6" style="padding: 0">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="min-height: 154px;clear: both">
+                        <div style="padding:20px 10px" class="location_label">
+                            <span class="label label-primary">离我最近</span>
+                            <span class="label label-primary">打折优惠</span>
+                            <span class="label label-success">时尚休闲</span>
+                            <span class="label label-info">低调奢华</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="min-height: 400px;">
+                <div id="location_map" style="width: 100%;min-height: 505px;height: 100%;border: 1px solid #09c;box-shadow: 1px 1px 1px 1px #ddd"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-12 col-md-12">
+            <ul  class="row nav-kit-list" role="tablist" id="myTab">
+                <li class="active col-xs-3 col-md-2"><a href="#home" role="tab" data-toggle="tab">超市热销</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#profile" role="tab" data-toggle="tab">商场特价</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#messages" role="tab" data-toggle="tab">餐饮资讯</a></li>
+                <li class="col-xs-3 col-md-2"><a href="#settings" role="tab" data-toggle="tab">购物天地</a></li>
+            </ul>
+        </div>
+        <div class="col-md-12" style="clear: both">
+            <div style="min-height: 500px;border: 1px solid #ddd">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="home">
+                        <div class="row">
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg1.jpg" alt=""/>
+                                    <p class="ad-title">$23 最美最实惠</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg2.jpg" alt=""/>
+                                    <p class="ad-title">尊贵源于自信</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg3.jpg" alt=""/>
+                                    <p class="ad-title">智能一体机</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg4.jpg" alt=""/>
+                                    <p class="ad-title">好用的大屏手机</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg5.jpg" alt=""/>
+                                    <p class="ad-title">好空调格力造</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg6.jpg" alt=""/>
+                                    <p class="ad-title">大容量</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg7.jpg" alt=""/>
+                                    <p class="ad-title">大容量</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg8.jpg" alt=""/>
+                                    <p class="ad-title">大容量</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg9.jpg" alt=""/>
+                                    <p class="ad-title">大容量</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg10.jpg" alt=""/>
+                                    <p class="ad-title">大容量</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg11.jpg" alt=""/>
+                                    <p class="ad-title">大容量</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-md-2">
+                                <div class="ad-item">
+                                    <img src="/images/picture/eg12.jpg" alt=""/>
+                                    <p class="ad-title">大容量</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="profile">
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg13.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg14.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg15.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg16.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg17.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-2">
+                            <div class="ad-item">
+                                <img src="/images/picture/eg18.jpg" alt=""/>
+                                <p class="ad-title">大容量</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="messages">3</div>
+                    <div class="tab-pane" id="settings">4</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Columns are always 50% wide, on mobile and desktop -->
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-xs-12">
+            <div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="border: 1px solid #ddd;min-height: 120px;"></div>
+        </div>
+    </div>
+    <div class="back-top-btn" style="display: none">
+        <p>消息</p>
+        <p onclick="bindBackTop()">顶部</p>
+    </div>
+    <div class="row" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <p class="footer-link">
+                    <a href="#">关于我们</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">在线客服</a>
+                    <a href="#">销售联盟</a>
+                </p>
+                <p class="footer-coryright">网络文化经营许可证京网文[2011]0168-061号  Copyright © 2004-2014</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var map = new BMap.Map("location_map");            // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+    map.enableScrollWheelZoom(true);
+   // map.disableDragging();     //禁止拖拽
+
+    function searchLocation($scope){
+
+        $scope.result_items = [];
+        $scope.searchByKeyWords = function(key_word){
+            var options = {
+                onSearchComplete: function(results){
+                    // 判断状态是否正确
+                    if (local.getStatus() == BMAP_STATUS_SUCCESS){
+                        var result_list = [];
+                        for (var i=0;i<results.getCurrentNumPois();i++){
+                            result_list.push(results.getPoi(i));
+                        }
+                        $scope.result_items = result_list;
+                        $scope.total_pages = results.getNumPages();
+                        $scope.total_items = results.getNumPois();
+                        $scope.page_index = results.getPageIndex();
+
+                    }else{
+                        alert('查询失败')
+                    }
+                }
+            };
+            var local = new BMap.LocalSearch(map, options);
+            local.search(key_word);
+        }
+        $scope.searchByKeyWordsKeyDown = function(e,key_word){
+            var e = e || window.event;
+            if (e.keyCode == 13 && key_word.length >0){
+                var options = {
+                    onSearchComplete: function(results){
+                        // 判断状态是否正确
+                        if (local.getStatus() == BMAP_STATUS_SUCCESS){
+                            var result_list = [];
+                            for (var i=0;i<results.getCurrentNumPois();i++){
+                                result_list.push(results.getPoi(i));
+                            }
+                            $scope.result_items = result_list;
+                            $scope.total_pages = results.getNumPages();
+                            $scope.total_items = results.getNumPois();
+                            $scope.page_index = results.getPageIndex();
+
+                        }else{
+                            alert('查询失败')
+                        }
+                    }
+                };
+                var local = new BMap.LocalSearch(map, options);
+                local.search(key_word);
+            }
+        }
+    }
+
+    var  w = '';
+    function startWorker()
+    {
+        if(typeof(Worker)!=="undefined")
+        {
+            if(typeof(w)=="undefined")
+            {
+                w= new Worker('/js/helloword.js');
+            }
+            w.onmessage = function (event) {
+                console.log(event.data);
+            };
+        }else{
+            console.log('Not support web worker');
+        }
+    }
+
+    function stopWorker(){
+        w.terminate();
+    }
+
+</script>
+</body>
+</html>

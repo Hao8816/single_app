@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Single Share</title>
+    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/headroom.js"></script>
+    <script type="text/javascript" src="/lib/jQuery.headroom.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+
+    <link rel="stylesheet" href="/style/single_index.css"/>
+    <script type="text/javascript" src="/js/single_index.js"></script>
+    <style type="text/css">
+        .store_goods_nav{
+            margin: 0;
+            padding: 0;
+        }
+        .store_goods_nav li{
+            list-style: none;
+            padding:10px;
+            border-bottom: 1px dotted #eee;
+        }
+        .store_goods_nav li:last-child{
+            border-bottom:none;
+        }
+        .store_goods_nav .nav-item{
+            font-size: 13px;
+            color: #333;
+        }
+        .store_goods_nav .nav-item a{
+            padding: 3px 10px;
+            font-size: 13px;
+            color:#666;
+        }
+        .share_tip_nav{
+            margin: 0;
+            padding: 0;
+        }
+        .share_tip_nav li{
+            list-style: none;
+            padding: 6px 10px;
+            min-width: 90px;
+            float: left;
+            text-align: center;
+        }
+        .share_tip_nav li a{
+            padding: 2px 10px;
+            border-radius: 25px;
+            text-decoration: none;
+        }
+        .share_tip_nav li a:hover{
+            background-color: #ddd;
+         }
+        .share_tip_nav .nav-active a{
+            background-color: #ddd;
+        }
+        .share_item_nav{
+            margin: 0;
+            padding: 0;
+        }
+        .share_item_nav li{
+            min-height: 120px;
+            border-bottom: 1px solid #eee;
+            list-style: none;
+            padding: 10px;
+
+        }
+    </style>
+</head>
+<body>
+<header id="header" data-headroom class="container-fluid animated">
+    <div class="row" style="background-color:rgba(48, 63, 159, 0.87);padding: 8px 10px;color: #fff;">
+        <div class="col-xs-6 col-sm-5 col-md-4">
+            <img src="/images/single_logo.ico" alt=""/>
+            <a href="/single/index/" style="color: #ffffff">首页</a>
+        </div>
+        <div class="col-xs-6 col-sm-7 col-md-8" style="text-align: right">
+            <span class="nav-item" onclick="reditectShoppingCartPage()"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</span>
+            <span class="nav-item">我的订单</span>
+            <span class="nav-item">我的帐号</span>
+            <span class="nav-item"><i class="glyphicon glyphicon-map-marker"></i>我的位置[北京]</span>
+        </div>
+    </div>
+</header>
+<div class="container" id="root-view-container" style="min-height: 1700px;">
+<div class="row">
+    <div class="col-xs-12 col-md-3" style="height: 40px;">
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-9">
+        <div style="padding: 15px 0px 5px 0px;">
+            <div class="row">
+                <div class="col-xs-12 col-md-3">
+                    <div style="text-align: center;padding: 5px 0px;">
+                        商品搜索
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-8">
+                    <div style="background-color:#fff;border:1px solid #ddd;overflow: auto;border-radius: 2px;">
+                        <input class="form-control input-sm" style="float:left;width: 80%;box-shadow: none;border: none" placeholder="商品名称" type="text"/>
+                        <span style="font-size:13px;float: right;padding: 6px 13px;border-left:1px solid #ddd;background-color: #f5f5f5">搜索</span>
+                    </div>
+                </div>
+            </div>
+            <p style="font-size: 13px;padding: 10px 3px;margin: 0"><span>关键词：</span>
+                <a href=""> Nike </a>
+                <a href=""> LiNing </a>
+                <a href=""> BWM </a>
+            </p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div style="padding:0px;">
+            <div class="my_profile">
+                <img class="head_image" src="/images/icons/default_head_image.png" alt=""/>
+                <p class="profile_info">
+                    <span class="name">chenhao8816</span>
+                </p>
+                <p class="account_info">
+                    <span class="account">账户余额：<a href="">$500</a></span>
+                </p>
+            </div>
+            <div style="background-color: #fff;overflow: auto;clear: both;">
+                <ul class="my_profile_nav">
+                    <li>我关注的
+                    </li>
+                    <li>我喜欢的
+                    </li>
+                    <li>我的分享
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Columns are always 50% wide, on mobile and desktop -->
+<div class="row">
+    <div class="col-xs-12 col-md-9" style="padding: 0">
+        <div style="min-height: 100px;border: 1px dotted #ddd">
+            <ul class="store_goods_nav">
+                <li class="nav-item"><span>类别：</span>
+                    <a href="">休闲食品</a>
+                    <a href="">饼干糕点</a>
+                    <a href="">糖果</a>
+                    <a href="">冲调食品</a>
+                    <a href="">营养保健品</a>
+                    <a href="">饮料</a>
+                    <a href="">酒类</a>
+                    <a href="">调味制品</a>
+                    <a href="">土产干货</a>
+                </li>
+                <li class="nav-item"><span>区域：</span>
+                    <a href="">东城区</a>
+                    <a href="">西城区</a>
+                    <a href="">朝阳区</a>
+                    <a href="">海淀区</a>
+                    <a href="">昌平区</a>
+                    <a href="">大兴区</a>
+                    <a href="">怀柔区</a>
+                </li>
+                <li class="nav-item"><span>价格：</span>
+                    <a href=""><10元</a>
+                    <a href="">10~20元</a>
+                    <a href="">21~50元</a>
+                    <a href="">51~100元</a>
+                    <a href="">101~200元</a>
+                    <a href="">>200元</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-12" style="padding: 0">
+            <ul class="row share_tip_nav" style="background-color: #f5f5f5;border: 1px solid #eee;margin-top: 15px;">
+                <li class="nav-active"><a href="#home3" role="tab" data-toggle="tab">最新分享</a></li>
+                <li><a href="#profile3" role="tab" data-toggle="tab">我的分享</a></li>
+                <li><a href="#messages3" role="tab" data-toggle="tab">值得一看</a></li>
+                <li><a href="#settings3" role="tab" data-toggle="tab">差评商品</a></li>
+            </ul>
+        </div>
+        <div class="col-md-12" style="clear: both;min-height:500px;padding: 0;border: 1px solid #eee">
+            <div class="tab-content" style="min-height: 500px;">
+                <div class="tab-pane active" id="home3">
+                    <ul class="share_item_nav">
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2" style="text-align: center">
+                                    <img class="img-responsive" src="/images/picture/eg4.jpg" alt="">
+                                </div>
+                                <div class="col-xs-9 col-md-9" style="padding: 0">
+                                    <p>商品简介：好用的大屏手机，你值得拥有。</p>
+                                    <p style="font-size: 12px;color: #666">售后内容： 本产品全国联保，享受三包服务，质保期为：一年质保。
+                                        如因质量问题或故障，凭厂商维修中心或特约维修点的质量检测证明，享受7日内退货，15日内换货，15日以上在质保期内享受免费保修等三包服务！
+                                        售后服务电话：400-89-5858</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2" style="text-align: center">
+                                    <img class="img-responsive" src="/images/picture/eg1.jpg" alt="">
+                                </div>
+                                <div class="col-xs-9 col-md-9" style="padding: 0">
+                                    <p>商品简介：一生有你。</p>
+                                    <p style="font-size: 12px;color: #666">
+                                        海尔商城是海尔集团旗下唯一官方网上专卖店，不销售任何样品机、次品机、翻新机。保持恒定低温的一种制冷设备，也是一种使食物或其他物品保持恒定低温冷态的民用产品。箱体内有压缩机、制冰机用以结冰的柜或箱，带有制冷装置的储藏箱。家用电冰箱的容积通常为
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2" style="text-align: center">
+                                    <img class="img-responsive" src="/images/picture/eg15.jpg" alt="">
+                                </div>
+                                <div class="col-xs-9 col-md-9" style="padding: 0">
+                                    <p>商品简介：000。</p>
+                                    <p style="font-size: 12px;color: #666">
+                                        因厂家会在没有任何提前通知的情况下更改产品包装、产地或者一些附件，本司不能确保客户收到的货物与商城图片、产地、附件说明完全一致。网站商品的功能参数仅供参考，请以实物为准，我司只能确保网站经营商品均为原厂正品行货！并且保证与当时市场上同样主流新品一致。若本商城没有及时更新，请大家谅解！
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2" style="text-align: center">
+                                    <img class="img-responsive" src="/images/picture/eg14.jpg" alt="">
+                                </div>
+                                <div class="col-xs-9 col-md-9" style="padding: 0">
+                                    <p>商品简介：一生有你。</p>
+                                    <p style="font-size: 12px;color: #666">
+                                        炒锅是中国一种烹饪工具，为锅的一种，特征是顶部开口大，圆底，由于中国南方食物多以小炒为主，故炒锅设计成有手柄以方便抛炒。炒锅主要用作煎或炒食物，但也可以用作蒸、炖.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2" style="text-align: center">
+                                    <img class="img-responsive" src="/images/picture/eg6.jpg" alt="">
+                                </div>
+                                <div class="col-xs-9 col-md-9" style="padding: 0">
+                                    <p>商品简介：一生有你。</p>
+                                    <p style="font-size: 12px;color: #666">
+                                        移动硬盘(Mobile Hard disk)顾名思义是以硬盘为存储介质，计算机之间交换大容量数据，强调便携性的存储产品。市场上绝大多数的移动硬盘都是以标准硬盘为基础的，而只有很少部分...
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2" style="text-align: center">
+                                    <img class="img-responsive" src="/images/picture/eg2.jpg" alt="">
+                                </div>
+                                <div class="col-xs-9 col-md-9" style="padding: 0">
+                                    <p>商品简介：一生有你。</p>
+                                    <p style="font-size: 12px;color: #666">
+                                        手表的制作及生产都基于一个简单而机智的发明，这就是“弹簧”，它能够收紧并储存能量，又能慢慢地把能量释放出来，以推动手表内的运行装置及指针，达到显示时间的功能，手表内的这种弹簧装置被称为主弹簧
+                                        手表工作原理
+                                        （Mainspring）。手表构造手表由表头、表带（表扣）组成。 其中表头的零部件包括：机芯、表壳、底盖、镜面、字面（常说的表盘）、指针、把的（调时间的，也叫按的）、令（部分表种要求）。
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2" style="text-align: center">
+                                    <img class="img-responsive" src="/images/picture/eg7.jpg" alt="">
+                                </div>
+                                <div class="col-xs-9 col-md-9" style="padding: 0">
+                                    <p>商品简介：一生有你。</p>
+                                    <p style="font-size: 12px;color: #666">
+                                        鼠标是一种很常用的电脑输入设备，它可以对当前屏幕上的游标进行定位，并通过按键和滚轮装置对游标所经过位置的屏幕元素进行操作。鼠标的鼻祖于1968年出现，美国科学家道格拉斯·恩格尔巴特（Douglas Englebart）在加利福尼亚制作了第一只鼠标。
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2" style="text-align: center">
+                                    <img class="img-responsive" src="/images/picture/eg18.jpg" alt="">
+                                </div>
+                                <div class="col-xs-9 col-md-9" style="padding: 0">
+                                    <p>商品简介：表面活性成分。</p>
+                                    <p style="font-size: 12px;color: #666">
+                                        洗发露中含有多种成分，这些成份的综合作用能起到清洁头皮和头发的功能。通常洗发露中最能起作用的成份是表面活性剂，即“表面活性成分”的简称表面活性剂起着清洁头发和头皮的作用，当洗发液与水混在一起时能产生泡沫。不过泡沫的多少并不能反映出清洁能力的强弱。
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-2 col-md-2" style="text-align: center">
+                                    <img class="img-responsive" src="/images/picture/eg13.jpg" alt="">
+                                </div>
+                                <div class="col-xs-9 col-md-9" style="padding: 0">
+                                    <p>商品简介：塑料货币。</p>
+                                    <p style="font-size: 12px;color: #666">
+                                        银行卡（Bank Card） 商业银行等金融机构及邮政储汇机构向社会发行的，具有消费信用、转账结算、存取现金等全部或部分功能的信用支付工具。银行卡包括信用卡和借记卡两种。因为各种银行卡都是塑料制成的，又用于存取款和转帐支付，所以又称之为“塑料货币”。
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-pane" id="profile3">
+                </div>
+                <div class="tab-pane" id="messages3">3</div>
+                <div class="tab-pane" id="settings3">4</div>
+                <div class="col-xs-12">
+                    <div style="padding: 3px;text-align: center;">
+                        <span style="cursor: pointer">加载更多</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-3">
+        <div style="min-height: 900px;text-align: center">
+            <ul class="location_nav">
+                <li><i class="sicon-hotel"></i>旅馆</li>
+                <li><i class="sicon-bus"></i>公交</li>
+                <li><i class="sicon-car"></i>出租车</li>
+                <li><i class="sicon-bank"></i>银行</li>
+                <li><i class="sicon-coffee"></i>下午茶</li>
+                <li><i class="sicon-market"></i>购物</li>
+                <li><i class="sicon-ktv"></i>KTV</li>
+                <li><i class="sicon-film"></i>电影</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12" style="padding: 0;margin-top: 15px;">
+        <div style="border: 1px solid #eee;min-height: 120px;"></div>
+    </div>
+</div>
+<div class="back-top-btn" style="display: none">
+    <p>消息</p>
+    <p onclick="bindBackTop()">顶部</p>
+</div>
+<div class="row" style="height:30px;">
+    <div class="col-xs-12">
+        <div style="padding: 3px;text-align: center;">
+            <p class="footer-link">
+                <a href="#">关于我们</a>
+                <a href="#">联系我们</a>
+                <a href="#">在线客服</a>
+                <a href="#">销售联盟</a>
+            </p>
+            <p class="footer-coryright">网络文化经营许可证京网文[2011]0168-061号  Copyright © 2004-2014</p>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

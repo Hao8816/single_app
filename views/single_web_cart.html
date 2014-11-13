@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+    <title>Single Cart</title>
+    <!-- 全局样式引入 -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-theme.css"/>
+    <link rel="stylesheet" href="/style/basic_style.css"/>
+
+    <!--网站logo-->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/single_logo.ico" />
+
+    <!--全局脚本引入-->
+    <script type="text/javascript" src="/lib/jquery-lib-2.11.js"></script>
+    <script type="text/javascript" src="/lib/headroom.js"></script>
+    <script type="text/javascript" src="/lib/jQuery.headroom.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/basic_script.js"></script>
+
+    <!--引入 Angular JS-->
+    <script type="text/javascript" src="/angular/angular.js"></script>
+
+    <!--<link rel="stylesheet" href="/single/media/style/single_index.css"/>
+    <script type="text/javascript" src="/single/media/js/single_index.js"></script>  -->
+    <style type="text/css">
+
+    </style>
+    <script type="text/javascript">
+        // shopping cart ctrl
+        function ShoppingCartCtrl($scope,$http){
+            // get shopping list from cache
+            if (localStorage.getItem('shopping_cart')){
+                var shopping_list = JSON.parse(localStorage.getItem('shopping_cart'));
+                $scope.total_count = 0;
+                $scope.total_price = 0;
+            }else{
+                console.log('empty shopping cart!');
+            }
+            // render shopping list
+            $scope.shopping_list = shopping_list;
+
+            // bind link to goods info page
+            $scope.showGoodsInfo = function(goods_info){
+                // 由于api暂时只支持字符串，所以用JSON序列化成字符串
+                sessionStorage.setItem('latest_visited',JSON.stringify(goods_info));
+                location.href='/single/goods/?id='+goods_info.sha1;
+            }
+
+            // calculate goods price in total
+            $scope.updateShoppingCart = function(goods_sha1){
+                //alert('update shopping cart')
+                // get goods info
+                //var goods_checked = true;
+                //if
+                var total_price = 0;
+                var total_count = 0;
+                for(var i=0;i< $scope.shopping_list.length;i++){
+                    var goods_obj = $scope.shopping_list[i];
+                    if (goods_obj['sha1'] == goods_sha1){
+                        if (goods_obj['checked']){
+                            goods_obj['checked'] = true;
+                            total_price += parseInt(goods_obj['price']) * parseInt(goods_obj['count']);
+                            total_count += parseInt(goods_obj['count']);
+                        }else{
+                            goods_obj['checked'] = false;
+                        }
+                    }else{
+                        if ($scope.shopping_list[i]['checked'] == true){
+                            total_price += parseInt(goods_obj['price']) * parseInt(goods_obj['count']);
+                            total_count += parseInt(goods_obj['count']);
+                        }
+                    }
+                }
+                $scope.total_price = total_price;
+                $scope.total_count = total_count;
+                console.log(goods_sha1)
+            }
+        }
+    </script>
+</head>
+<body>
+<header id="header" data-headroom class="container-fluid animated">
+    <div class="row" style="background-color:rgba(48, 63, 159, 0.87);padding: 8px 10px;color: #fff;">
+        <div class="col-xs-6 col-sm-5 col-md-4">
+            <img src="/images/single_logo.ico" alt=""/>
+            <a href="/single/index/" style="color: #ffffff">首页</a>
+        </div>
+        <div class="col-xs-6 col-sm-7 col-md-8" style="text-align: right">
+            <span class="nav-item" onclick="reditectShoppingCartPage()"><i class="glyphicon glyphicon-shopping-cart"></i>购物车</span>
+            <span class="nav-item">我的订单</span>
+            <span class="nav-item">我的帐号</span>
+            <span class="nav-item"><i class="glyphicon glyphicon-map-marker"></i>我的位置[北京]</span>
+        </div>
+    </div>
+</header>
+<div class="container-fluid" id="root-view-container" style="min-height: 1700px;">
+    <div class="row">
+        <div class="col-md-9">
+            <div style="padding: 15px 0px 5px 0px;">
+                <div class="row">
+                    <div class="col-xs-12 col-md-3">
+                        <div style="text-align: center;padding: 5px 0px;">
+                            商品搜索
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8">
+                        <div style="background-color:#fff;border:1px solid #ddd;overflow: auto;border-radius: 2px;">
+                            <input class="form-control input-sm" style="float:left;width: 80%;box-shadow: none;border: none" placeholder="商品名称" type="text">
+                            <span style="font-size:13px;float: right;padding: 6px 13px;border-left:1px solid #ddd;background-color: #f5f5f5">搜索</span>
+                        </div>
+                    </div>
+                </div>
+                <p style="font-size: 13px;padding: 10px 3px;margin: 0"><span>关键词：</span>
+                    <a href=""> Nike </a>
+                    <a href=""> LiNing </a>
+                    <a href=""> BWM </a>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div style="padding:0px;">
+                <div class="my_profile">
+                    <img class="head_image" src="/images/icons/default_head_image.png" alt="">
+                    <p class="profile_info">
+                        <span class="name">chenhao8816</span>
+                    </p>
+                    <p class="account_info">
+                        <span class="account">账户余额：<a href="">$500</a></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row" ng-controller="ShoppingCartCtrl">
+        <div class="col-md-12">
+            <p>我的购物车</p>
+            <div style="height: 30px;text-align: center;font-size: 13px;">
+                <div class="col-md-4">商品信息</div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2">价格</div>
+                <div class="col-md-2">数量</div>
+                <div class="col-md-1"></div>
+                <div class="col-md-1">操作</div>
+            </div>
+            <div style="border: 1px solid #f5f5f5;overflow: auto">
+                <div style="padding: 10px 0px;" class="col-md-12 col-sm-12" ng-repeat="goods in shopping_list">
+                    <div class="col-md-1 col-sm-2">
+                        <input ng-model="goods.checked" ng-change="updateShoppingCart(goods.sha1)" style="position: absolute;top: 40%" type="checkbox"/>
+                        <img style="border: 1px solid #eee;margin-left: 30px" class="img-responsive" ng-src="{{goods.url}}" alt=""/>
+                    </div>
+                    <div class="col-md-5 col-sm-8" >
+                        <p ng-click="showGoodsInfo(goods)" style="font-size: 13px;padding: 0px 10px"><a href="">{{goods.name}}</a></p>
+                        <p style="padding: 0px 10px;color: rgba(0,0,0,0.56);font-size: 13px;">{{goods.descc}}</p>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <p ng-bind=goods.price style="font-size: 13px;color: rgba(0,0,0,0.87);text-align: center"></p>
+                    </div>
+                    <div class="col-md-1 col-sm-3">
+                        <p style="font-size: 13px;color: rgba(0,0,0,0.56);text-align: center">有货</p>
+                    </div>
+                    <div class="col-md-2 col-sm-3">
+                        <input ng-model=goods.count ng-change="updateShoppingCart()" style="line-height: 14px;font-size: 10px;outline: none" type="number" name="points" min="1" max="10" />
+                    </div>
+                    <div class="col-md-1 col-sm-3" style="text-align: center">
+                        <a href="">删除</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" style="height: 50px;background-color: #f5f5f5;padding: 10px;">
+                <span>总数量：<em ng-bind="total_count"></em> 件</span>
+                <span style="margin-left: 20px;">总价: <em ng-bind="total_price"></em> 元</span>
+                <span class="btn btn-sm btn-danger pull-right">去结算</span>
+            </div>
+        </div>
+    </div>
+    <div class="row loading-more-btn" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <span style="cursor: pointer">
+                    <i class="glyphicon glyphicon-refresh"></i>加载更多</span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div style="border: 1px solid #ddd;min-height: 120px;"></div>
+        </div>
+    </div>
+    <div class="back-top-btn" style="display: none">
+        <p>消息</p>
+        <p onclick="bindBackTop()">顶部</p>
+    </div>
+    <div class="row" style="height:30px;">
+        <div class="col-xs-12">
+            <div style="padding: 3px;text-align: center;">
+                <p class="footer-link">
+                    <a href="#">关于我们</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">在线客服</a>
+                    <a href="#">销售联盟</a>
+                </p>
+                <p class="footer-coryright">网络文化经营许可证京网文[2011]0168-061号  Copyright © 2004-2014</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

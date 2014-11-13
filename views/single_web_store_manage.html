@@ -1,0 +1,216 @@
+<style type="text/css">
+    .manage-nav{
+        margin: 0;
+        padding: 0;
+        background-color: #c5cae9;
+        overflow: auto;
+    }
+    .manage-nav li{
+        float: left;
+        padding: 5px;
+        text-align: center;
+        list-style: none;
+        color: rgba(0, 0, 0, 0.87);
+    }
+    .manage-nav .nav-item{
+        background-color:transparent;
+        color:rgba(0, 0, 0, 0.87);
+    }
+    .manage-nav .nav-item:hover{
+        /*background-color: #fff;*/
+        color: rgba(0,0,0,0.56);
+    }
+    .manage-nav .nav-active{
+        position: relative;
+    }
+    .manage-nav .nav-active::before{
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+        border-bottom: 6px solid #fff;
+        position: absolute;
+        content: '';
+        bottom: 0%;
+        left: 49%;
+    }
+    .store-page-view{
+        padding: 20px;
+    }
+    .store-page-view .section-title{
+        color: rgba(0,0,0,0.87);
+        font-weight: bold;
+    }
+    .store-page-view .line-title{
+        color: rgba(0,0,0,0.56);
+    }
+    .store-page-view .section-line{
+        overflow: auto;
+    }
+    .store-page-view .section{
+        width: 90%;
+        display: inline-block;
+        padding: 10px;
+    }
+</style>
+
+<script type="text/javascript">
+    $(function(){
+       $('.manage-nav .nav-item').click(function(){
+           $('.manage-nav .nav-active').removeClass('nav-active');
+           $(this).addClass('nav-active');
+       });
+    });
+
+    // 获取店铺位置的信息
+    function getNewStoreLocation(city,address){
+        var map = new BMap.Map("new_store_location");
+        var point = new BMap.Point(116.331398,39.897445);
+        map.centerAndZoom(point,12);
+        // 创建地址解析器实例
+        var myGeo = new BMap.Geocoder();
+        // 将地址解析结果显示在地图上,并调整地图视野
+        myGeo.getPoint(address, function(point){
+            if (point) {
+                map.centerAndZoom(point, 16);
+                map.addOverlay(new BMap.Marker(point));
+            }
+        }, city);
+    }
+
+
+    // 再店铺管理的几个tab里面切换
+    function changeStoreManagePageView(page_name){
+        $('.store-page-view').hide();
+        $('.'+page_name).show();
+
+    }
+
+
+</script>
+
+<ul class="manage-nav">
+    <li class="col-md-2 col-sm-2 col-xl-2"><i class="glyphicon glyphicon-home"></i>店铺管理</li>
+    <li onclick="changeStoreManagePageView('add-store-page')" class="col-md-2 col-sm-2 col-xl-2 nav-item nav-active">添加店铺</li>
+    <li onclick="changeStoreManagePageView('check-store-page')" class="col-md-2 col-sm-2 col-xl-2 nav-item">查询店铺</li>
+    <li onclick="changeStoreManagePageView('setting-store-page')" class="col-md-2 col-sm-2 col-xl-2 nav-item">店铺设置</li>
+</ul>
+
+
+<div class="store-page-view add-store-page">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="section">
+                <p class="section-title">基本信息</p>
+                <p class="section-line col-md-8">
+                    <span class="line-title">店铺名称：</span>
+                    <input class="form-control input-sm" type="text" />
+                    <span class="message"></span>
+                </p>
+                <p class="section-line col-md-8">
+                    <span class="line-title">店铺编号：</span>
+                    <input class="form-control input-sm" type="text" />
+                    <span class="message"></span>
+                </p>
+                <p class="section-line col-md-8">
+                    <span class="line-title">店铺等级：</span>
+                    <input class="form-control input-sm" type="text" />
+                    <span class="message"></span>
+                </p>
+                <p class="section-line col-md-10">
+                    <span class="line-title">店铺描述：</span>
+                    <textarea class="form-control" rows="3">
+
+                    </textarea>
+                    <span class="message"></span>
+                </p>
+            </div>
+            <div class="section">
+                <p class="section-title">位置信息</p>
+                <p class="section-line position-select">
+                    <span class="line-title col-md-12">区域信息：</span>
+                    <span class="col-md-4" style="padding-right: 5px">
+                        <select onchange="checkCountyOfCityCode(this)" class="form-control" name="city" id="1">
+                            <option value="" selected>请选择市/省</option>
+                        </select>
+                    </span>
+                    <span class="col-md-4" style="padding-right: 5px">
+                        <select class="form-control col-md-2" name="county" id="2">
+                            <option value="" selected>请选择区/县</option>
+                        </select>
+                    </span>
+                </p>
+                <p class="section-line col-md-10">
+                    <span class="line-title">详细地址：</span>
+                    <textarea class="form-control" rows="3"></textarea>
+                    <span class="message"></span>
+                </p>
+                <div class="section-line col-md-10">
+                    <span class="line-title">地图信息:</span>
+                    <div id="new_store_location" style="border:1px solid #ccc;text-align:center;height: 200px;width: 340px;background-color: #f5f5f5;line-height: 200px;">
+                        正在加载位置信息...
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <p class="section-title">联系信息：</p>
+                <p class="section-line col-md-8">
+                    <span class="line-title">联系电话：</span>
+                    <input class="form-control input-sm" type="text"/>
+                    <span class="message"></span>
+                </p>
+                <p class="section-line col-md-8">
+                    <span class="line-title">微信帐号：</span>
+                    <input class="form-control input-sm" type="text"/>
+                    <span class="message"></span>
+                </p>
+                <p class="section-line col-md-8">
+                    <span class="line-title">联系电话：</span>
+                    <input class="form-control input-sm" type="text"/>
+                    <span class="message"></span>
+                </p>
+            </div>
+            <div class="section">
+                <p class="section-line">
+                    <span class="btn btn-default btn-sm">取消添加</span>
+                    <span type="submit" class="btn btn-default btn-sm">添加店铺</span>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="section">
+                <p class="section-title">店铺Logo</p>
+                <div style="height: 200px;width: 200px;background-color: #eee"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="store-page-view check-store-page" style="display: none">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="section">
+                <p class="section-title">查询条件</p>
+                <p class="section-line col-md-8">
+                    <span class="line-title">店铺名称：</span>
+                    <input class="form-control input-sm" type="text"/>
+                    <span class="message"></span>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>
+
+<div class="store-page-view setting-store-page" style="display: none">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="section">
+                <p class="section-title">店铺设置</p>
+                <p class="section-line col-md-8">
+                    <span class="line-title">店铺名称：</span>
+                    <input class="form-control input-sm" type="text"/>
+                    <span class="message"></span>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6"></div>
+    </div>
+</div>
