@@ -39,9 +39,32 @@ function readUserFromDatabase(key){
     });
 }
 
+
+function getValueBykeyFormRedis(key){
+    client.get(key,function(err,value){
+        if (err){
+            console.log('Get Value By Key Error'+err);
+        }
+        readKeyFromMysql(key,value);
+    })
+}
+function readKeyFromMysql(key,value){
+    console.log(key+'--'+value);
+    models.User.find({ name: key },function(err,result){
+        if(err){
+            console.log('can not find');
+        }else{
+            console.log(result);
+        }
+    })
+}
+
+
+
 function writeUserToDatabase(user_obj){
 
 
 }
 
 exports.readUserFromDatabase = readUserFromDatabase;
+exports.getValueBykeyFormRedis = getValueBykeyFormRedis;
