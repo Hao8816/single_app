@@ -5,6 +5,8 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var log4js = require('log4js');
+
 
 var routes = require('./routes/single');
 var users = require('./routes/users');
@@ -63,6 +65,26 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
+/*log4js.configure({
+    appenders: [
+        { type: 'console' },{
+            type: 'file',
+            filename: './logs/server.log',
+            maxLogSize: 1024,
+            backups:4,
+            category: 'normal'
+        }
+    ],
+    replaceConsole: true
+});
+app.use(log4js.connectLogger(this.logger('normal'), {level:'auto', format:':method :url'}));
+
+exports.logger=function(name){
+    var logger = log4js.getLogger(name);
+    logger.setLevel('INFO');
+    return logger;
+} */
 
 
 module.exports = app;

@@ -128,7 +128,8 @@ function getCategoryGoodList(req,res){
                     if (err){
                         console.log('Get Value By Key Error'+err);
                     }
-                    console.log('----read from redis ----')
+                    console.log('----read from redis ----');
+                    logger.INFO('----read from redis ----');
                     readMysql(err,value);
                 })
                 //client.hkeys('GOODS_HASH_LIST',function(err,result1){console.log(result1)});
