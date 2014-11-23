@@ -1,14 +1,21 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3fcb398929314b9b5fd946fc3a5a9b30cab524dd
 myapp
-=====
 
 this is my app node
-<<<<<<< HEAD
-=======
-1. 学习使用HTML5来构建WEB应用
->>>>>>> cf279b072009ce8b5968983b0a07f1ba5972599e
-=======
->>>>>>> 3fcb398929314b9b5fd946fc3a5a9b30cab524dd
+
+关于缓存优化：
+
+1.直接读取数据库，68.22kb的数据耗时126ms
+GET /style/images/number9.png 304 0ms
+----read from redis ----
+----read from mysql ----
+----get result----
+POST /ajax/get_category_good_list/ 200 126ms - 68.22kb
+POST /ajax/start/ 200 4ms - 194b
+GET /single/category/ 200 6ms - 11.38kb
+
+2.从redis缓存里面读取数据，68.22kb耗时9ms
+----read from redis ----
+----return result from redis ----
+----get result----
+POST /ajax/get_category_good_list/ 200 9ms - 68.22kb
+POST /ajax/start/ 200 1ms - 194b

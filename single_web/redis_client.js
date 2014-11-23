@@ -13,13 +13,18 @@ function setValueByKey(key,value,expire){
         client.expires(key,expire)
     }
 }
+
+function showResult(err,result){
+    console.log(result);
+}
+
 /*get value by key from redis*/
 function getValueByKey(key){
     client.get(key,function(err,value){
         if (err){
             console.log('Get Value By Key Error'+err);
         }
-        return value;
+        showResult(err,value);
     })
 }
 
