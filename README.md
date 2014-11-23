@@ -19,3 +19,7 @@ GET /single/category/ 200 6ms - 11.38kb
 ----get result----
 POST /ajax/get_category_good_list/ 200 9ms - 68.22kb
 POST /ajax/start/ 200 1ms - 194b
+
+
+
+配置git origin 的时候尽量使用ssh key， git@github.com 这样的地址，修改的时候 在 .git/config 文件中
