@@ -22,5 +22,9 @@ router.post('/get_category_good_list/',function(req,res){
     single_ajax.getCategoryGoodList(req,res);
 });
 
+router.post('/get_goods_attr_list/',function(req,res){
+    single_ajax.getGoodsAttrList(req,res);
+});
+
 
 module.exports = router;

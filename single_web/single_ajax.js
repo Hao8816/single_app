@@ -129,7 +129,7 @@ function getCategoryGoodList(req,res){
                         console.log('Get Value By Key Error'+err);
                     }
                     console.log('----read from redis ----');
-                    logger.INFO('----read from redis ----');
+                    //logger.INFO('----read from redis ----');
                     readMysql(err,value);
                 })
                 //client.hkeys('GOODS_HASH_LIST',function(err,result1){console.log(result1)});
@@ -170,7 +170,23 @@ function getCategoryGoodList(req,res){
     )
 };
 
+function getGoodsAttrList(req,res){
+    client.hgetall('MOBILE_ATTR',function(err,data){
+        var rsdic = {};
+        var data_list = [];
+        for(var key in data){
+            var data_json = {'title':key,'attrs':JSON.parse(data[key])}
+            data_list.push(data_json);
+        }
+        rsdic['ret'] = '0001';
+        rsdic['data'] = data_list;
+        res.send(rsdic);
+        res.end();
+    });
+}
+
 exports.start = start;
 exports.checkUserName = checkUserName;
 exports.getGoodList = getGoogsList;
 exports.getCategoryGoodList = getCategoryGoodList;
+exports.getGoodsAttrList = getGoodsAttrList;

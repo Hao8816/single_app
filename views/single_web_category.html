@@ -133,6 +133,17 @@
             });
         }
 
+        function showGoodsAttrCtrl($scope,$http){
+            $http.post('/ajax/get_goods_attr_list/').success(function (data) {
+                if (data['ret'] == '0001') {
+                    console.log(data);
+                    $scope.attr_list = data['data']
+                } else {
+
+                }
+            });
+        }
+
         $(function(){
            $('.category_item_nav li').click(function(){
                $('.nav-active').removeClass('nav-active');
@@ -140,6 +151,7 @@
            });
 
         });
+
     </script>
 </head>
 <body>
@@ -225,27 +237,11 @@
                 <li><img src="/style/images/number9.png"></li>
             </ul>
         </div>
-        <div class="col-xs-12 col-sm-10 col-md-10" style="min-height: 400px;padding: 0;border: 1px solid #ddd;border-top-color: #f5f5f5">
-            <ul class="store_goods_nav">
-                <li class="nav-item"><span>类别：</span>
-                    <a href="">休闲食品</a>
-                    <a href="">饼干糕点</a>
-                    <a href="">糖果</a>
-                    <a href="">冲调食品</a>
-                    <a href="">营养保健品</a>
-                    <a href="">饮料</a>
-                    <a href="">酒类</a>
-                    <a href="">调味制品</a>
-                    <a href="">土产干货</a>
-                </li>
-                <li class="nav-item"><span>区域：</span>
-                    <a href="">东城区</a>
-                    <a href="">西城区</a>
-                    <a href="">朝阳区</a>
-                    <a href="">海淀区</a>
-                    <a href="">昌平区</a>
-                    <a href="">大兴区</a>
-                    <a href="">怀柔区</a>
+        <div class="col-xs-12 col-sm-10 col-md-10" ng-controller="showGoodsAttrCtrl" style="min-height: 400px;padding: 0;border: 1px solid #ddd;border-top-color: #f5f5f5">
+            <ul class="store_goods_nav" ng-repeat="attr in attr_list">
+                <li class="nav-item">
+                    <span>{{attr.title}}：</span>
+                    <span>{{attr.attrs}}</span>
                 </li>
             </ul>
             <div class="row">
