@@ -171,6 +171,7 @@ function getCategoryGoodList(req,res){
 };
 
 function getGoodsAttrList(req,res){
+    // 直接从redis里面读取数据
     client.hgetall('MOBILE_ATTR',function(err,data){
         var rsdic = {};
         var data_list = [];
