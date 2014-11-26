@@ -17,14 +17,39 @@ http.get('http://detail.zol.com.cn/cell_phone_index/subcate57_list_1.html',funct
     console.error('can not request tmall');
 });
 
-http.get('http://detail.zol.com.cn/xhr_Header_WTrendEnter_proIds=p353416-p374241-p385410-p374242-p374499-p369691-p382520-p366588-p390206-p381220-p383462-p388980-p355153-p368904-p366586-p385937-p386683-p314780-p392016-p368216-p362464-p365757-p362774-p374502-p392292%5Ecallback=WtrendCallback.GetFollow.html?_=1416889263826',function(res){
+
+// 获取导航里面的分类信息
+http.get('http://detail.zol.com.cn/xhr_Header_Default_subcateId=57%5EmanuId=0%5EpageType=List.html',function(res){
     res.on('data',function(data){
-        console.log(data.toString());
+        getZOLNavData(data);
     }).on('error',function(err){
         console.log(err)
     })
 });
 
+function getZOLNavData(data) {
+    //var decode_string = iconv.decode(data, 'GBK');
+    var decode_string = data;
+    var env = require('jsdom').env;
+    // 设置html环境
+    env(decode_string.toString(), function (errors, window) {
+        var $ = require('jquery')(window);
+        var nav_title_list = $('#head_pub_nav').find('.onav');
+        var nav_data = {};
+        for (var i = 0; i < nav_title_list.length; i++) {
+            var title = $(nav_title_list[i]).find('span a').text();
+            var sub_title_list = $(nav_title_list[i]).find('.sub_nav dd a');
+            var sub_titles = [];
+            for (var j = 0; j < sub_title_list.length; j++) {
+                var title_text = $(sub_title_list[j]).text();
+                sub_titles.push(title_text);
+            }
+            nav_data[title] = sub_titles;
+        }
+        console.log(nav_data);
+
+    });
+}
 
 function getZOLData(data,encoding){
     //console.log(data.toString('gb2312'));
