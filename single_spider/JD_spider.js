@@ -8,10 +8,8 @@ var iconv = require('iconv-lite');
 
 http.get('http://www.jd.com/allSort.aspx',function(res){
     res.on('data',function(data){
-        //console.log(res.charset);
         var encoding = res.headers['content-type'];
         getJDData(data,encoding);
-        //console.log(data.toString())
     }).on('error',function(err){
         console.error('can not get response from tmall');
     })
@@ -21,16 +19,8 @@ http.get('http://www.jd.com/allSort.aspx',function(res){
 
 
 function getJDData(data,encoding){
-    //console.log(data.toString('gb2312'));
-    //console.log(encoding);
-    var charset = 'utf8';
-    if (encoding.indexOf('charset')>0){
-        //charset = encoding.search
-    }
-    var decode_string = iconv.decode(data,'GB2312');
-    //var decode_string = data;
-    //console.log(decode_string)
     var env = require('jsdom').env;
+    var decode_string = iconv.decode(data,'GB2312');
     // 设置html环境
     env(decode_string.toString(), function (errors, window) {
         try{
@@ -59,6 +49,9 @@ function getJDData(data,encoding){
                     sub_title_data[sub_title] = sub_link_text_list;
                 }
                 title_data[title_1] = sub_title_data;
+            }
+            if ($.isEmptyObject(title_data)){
+                return;
             }
             console.log(title_data);
             console.log(title_link_list);
