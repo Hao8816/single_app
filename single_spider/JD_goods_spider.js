@@ -12,7 +12,7 @@ var iconv = require('iconv-lite');
 
 // 当前是显示手机页面的链接
 var basic_url = 'http://list.jd.com/list.html?cat=9987,653,655';
-for (var i=0;i<3;i++){
+for (var i=0;i<2;i++){
     var buffer_list = [];
     var goods_url = basic_url + '&page='+i+'&JL=6_0_0';
     http.get(goods_url,function(res){
@@ -107,11 +107,29 @@ function cacheJDImageList(url_list){
 function getJDGoodsPrice(goods_sku_list,area_key){
     console.log(area_key);
     var area = area_key.replace(',','_');
+    var price_list_buffer = [];
     http.get('http://p.3.cn/prices/mgets?skuIds=J_' + goods_sku_list.join(',J_') + '&type=1&area=' + area ,function(res){
         res.on('data',function(data){
-            console.log(data.toString());
+            console.log(data);
+            price_list_buffer.push(data);
+        }).on('end',function(){
+            var new_buffer = Buffer.concat(price_list_buffer);
+            pickJDGoodsPrice(new_buffer);
         }).on('error',function(err){
             console.log(err)
         });
     });
+}
+
+
+var goods_JD_price_dic = {};
+var goods_MK_price_dic = {};
+function pickJDGoodsPrice(price_list){
+    var price_json_list = JSON.parse(price_list);
+    price_json_list.forEach(function(obj){
+       goods_JD_price_dic[obj['id']] = obj['p'];
+       goods_MK_price_dic[obj['id']] = obj['m'];
+    });
+    console.log(goods_JD_price_dic);
+    console.log(goods_MK_price_dic);
 }
