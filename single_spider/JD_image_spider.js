@@ -3,6 +3,11 @@
 var http = require('http');
 var fs = require('fs');
 
+
+
+
+
+
 function JD_image_download(file_url){
     // 取得文件名的后缀
     var file_path = file_url.split('/');

@@ -1,7 +1,7 @@
 // 定义搜索的一些关键词
 
 var search_key_words = ['手机','电脑'];
-
+var JD_download = require('./JD_image_spider');
 var http = require('http');
 var redis = require('redis');
 var client =  redis.createClient();
@@ -9,49 +9,84 @@ var client =  redis.createClient();
 var iconv = require('iconv-lite');
 
 // 请求Tmall的首页，爬取手机分类
+var url_list = [];
+// 构造搜索爬虫的url
+for (var i=0;i<search_key_words.length;i++){
+    //var url_encode_string = encodeURIComponent(search_key_words[i]);
+    url_list.push('http://search.jd.com/Search?keyword='+search_key_words[i]+'&enc=utf-8');
+    console.log(url_list);
+}
 
-http.get('http://detail.zol.com.cn/cell_phone_index/subcate57_list_1.html',function(res){
+
+
+// 定义buffer对象来存储返回的数据
+
+var buffer_list = [];
+
+http.get('http://list.jd.com/list.html?cat=9987,653,655',function(res){
     res.on('data',function(data){
-        var encoding = res.headers['content-type'];
-        getZOLData(data,encoding);
+        buffer_list.push(data);
+        console.log(data);
+    }).on('end',function(){
+        var new_buffer = Buffer.concat(buffer_list);
+        getJDGoodsData(new_buffer);
+        console.log('success')
     }).on('error',function(err){
-        console.error('can not get response from tmall');
+        console.error('can not get response from JD');
     })
 }).on('error',function(e){
-    console.error('can not request tmall');
+    console.error('can not request JD');
 });
 
 
-// 获取导航里面的分类信息
-http.get('http://detail.zol.com.cn/xhr_Header_Default_subcateId=57%5EmanuId=0%5EpageType=List.html',function(res){
-    res.on('data',function(data){
-        getZOLNavData(data);
-    }).on('error',function(err){
-        console.log(err)
-    })
-});
+// 循环url 取得页面data
+/*for (var j=0;j<url_list.length;j++){
+    console.log(url_list[j]);
+    http.get(url_list[j],function(res){
+        res.on('data',function(data){
+            getJDGoodsData(data);
+            console.log(data);
+        }).on('end',function(){
+            console.log('success')
 
-function getZOLNavData(data) {
+        }).on('error',function(err){
+            console.error('can not get response from JD');
+        })
+    }).on('error',function(e){
+        console.error('can not request JD');
+    });
+}*/
+
+
+function getJDGoodsData(data) {
     //var decode_string = iconv.decode(data, 'GBK');
     var decode_string = data;
+    console.log(data.toString())
     var env = require('jsdom').env;
     // 设置html环境
     env(decode_string.toString(), function (errors, window) {
         var $ = require('jquery')(window);
-        var nav_title_list = $('#head_pub_nav').find('.onav');
-        var nav_data = {};
-        for (var i = 0; i < nav_title_list.length; i++) {
-            var title = $(nav_title_list[i]).find('span a').text();
-            var sub_title_list = $(nav_title_list[i]).find('.sub_nav dd a');
-            var sub_titles = [];
-            for (var j = 0; j < sub_title_list.length; j++) {
-                var title_text = $(sub_title_list[j]).text();
-                sub_titles.push(title_text);
-            }
-            nav_data[title] = sub_titles;
+        var goods_list = $('.list-h').find('li .lh-wrap');
+        console.log(goods_list.length);
+        var image_url_list = [];
+        for (var i = 0; i < goods_list.length; i++) {
+            var url = $(goods_list[i]).find('.p-img img').attr('data-lazyload');
+            image_url_list.push(url);
         }
-        console.log(nav_data);
+        console.log(image_url_list);
+        cacheJDImageList(image_url_list);
 
     });
 }
 
+function cacheJDImageList(url_list){
+    url_list.forEach(function(obj){
+        JD_download.JD_image_download(obj);
+        client.lpush('JD_GOODS_IMAGE_LIST',obj,function(err){
+            if(err){
+                console.log(err);
+            }
+        })
+    })
+
+}
