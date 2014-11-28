@@ -12,7 +12,7 @@ var iconv = require('iconv-lite');
 
 // 当前是显示手机页面的链接
 var basic_url = 'http://list.jd.com/list.html?cat=9987,653,655';
-for (var i=0;i<2;i++){
+for (var i=0;i<3;i++){
     var buffer_list = [];
     var goods_url = basic_url + '&page='+i+'&JL=6_0_0';
     http.get(goods_url,function(res){
