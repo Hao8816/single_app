@@ -12,9 +12,14 @@ var iconv = require('iconv-lite');
 
 // 当前是显示手机页面的链接
 var basic_url = 'http://list.jd.com/list.html?cat=9987,653,655';
-for (var i=0;i<3;i++){
+var page_index = 1;
+var max_page_index =3;
+var timer_id = '';
+
+function getJDGoodsListData(basic_url){
+    console.log('page_index = '+page_index);
     var buffer_list = [];
-    var goods_url = basic_url + '&page='+i+'&JL=6_0_0';
+    var goods_url = basic_url + '&page='+page_index+'&JL=6_0_0';
     http.get(goods_url,function(res){
         res.on('data',function(data){
             buffer_list.push(data);
@@ -29,7 +34,16 @@ for (var i=0;i<3;i++){
     }).on('error',function(e){
         console.error('can not request JD');
     });
+    page_index ++ ;
+    console.log('========check==========')
+    if (page_index == max_page_index){
+        console.log('------- over -------')
+        clearInterval(timer_id);
+    }
 }
+
+timer_id = setInterval(getJDGoodsListData, 3000, [basic_url]);
+
 
 
 function getJDGoodsData(data) {
@@ -85,6 +99,7 @@ function getJDGoodsData(data) {
             }
         }
         if(area_id != ''){
+            console.log(goods_sku_list.length);
             getJDGoodsPrice(goods_sku_list,area_id);
         }
         // 取得网页里面的script信息，取得获取价格的
@@ -110,7 +125,6 @@ function getJDGoodsPrice(goods_sku_list,area_key){
     var price_list_buffer = [];
     http.get('http://p.3.cn/prices/mgets?skuIds=J_' + goods_sku_list.join(',J_') + '&type=1&area=' + area ,function(res){
         res.on('data',function(data){
-            console.log(data);
             price_list_buffer.push(data);
         }).on('end',function(){
             var new_buffer = Buffer.concat(price_list_buffer);
@@ -130,6 +144,8 @@ function pickJDGoodsPrice(price_list){
        goods_JD_price_dic[obj['id']] = obj['p'];
        goods_MK_price_dic[obj['id']] = obj['m'];
     });
-    console.log(goods_JD_price_dic);
-    console.log(goods_MK_price_dic);
+    if(page_index == max_page_index){
+        console.log(goods_JD_price_dic);
+    }
 }
+
