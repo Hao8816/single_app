@@ -174,10 +174,10 @@
                     <div class="tab-pane active" id="home">
                         <div ng-controller="ShowGoodsCtrl">
                             <div class="ad-item-outter col-xs-4 col-md-2" ng-repeat="good in goods">
-                                <div class="ad-item" ng-click="showGoodsInfo(good)">
-                                    <img class="img-responsive" ng-src="{{good.url}}" alt=""/>
-                                    <p class="ad-title">{{good.name}}</p>
-                                    <p class="ad-desc">{{good.descc}}</p>
+                                <div class="ad-item">
+                                    <img class="img-responsive" ng-src="{{good.image_url}}" alt=""/>
+                                    <p class="ad-title">{{good.JD_price}}</p>
+                                    <p class="ad-desc">{{good.goods_desc}}</p>
                                 </div>
                             </div>
                         </div>

@@ -57,7 +57,7 @@ function checkUserName(req,res){
 };
 
 function getGoogsList(req,res){
-   models.Item_Record.find({status:"1"},function(err,result){
+   /*models.Item_Record.find({status:"1"},function(err,result){
        var rsdic={};
        if(err){
            console.log('get good list error')
@@ -68,7 +68,20 @@ function getGoogsList(req,res){
        }
        res.send(rsdic);
        res.end();
-   })
+   })*/
+    client.lrange('ALL_JD_GOODS_LIST','0','-1',function(err,data){
+        var rsdic = {};
+        if(err){
+            console.log(err);
+        }
+        console.log(data);
+        var goods_list = data.map(function(obj){return JSON.parse(obj)});
+        rsdic['goods'] = goods_list;
+        rsdic['ret']='0001';
+        rsdic['info']='Success';
+        res.send(rsdic);
+        res.end();
+    })
 };
 
 // 用lrange来获取商品列表

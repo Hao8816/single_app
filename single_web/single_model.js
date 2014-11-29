@@ -5,6 +5,7 @@ var date= new Date();
 // check connection error
 db.on('connect',function(err){
     if (err){
+        console.log(err);
         console.log('Can not connect to Mysql.')
     }else{
         console.log('Create successful!')

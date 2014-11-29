@@ -2,6 +2,8 @@
 
 var JD_download = require('./JD_image_spider');
 var http = require('http');
+
+var sha1 = require('sha1');
 var redis = require('redis');
 var client =  redis.createClient();
 // 解决nodejs不支持gbk编码的问题
@@ -13,7 +15,7 @@ var iconv = require('iconv-lite');
 // 当前是显示手机页面的链接
 var basic_url = 'http://list.jd.com/list.html?cat=9987,653,655';
 var page_index = 1;
-var max_page_index =3;
+var max_page_index =10;
 var timer_id = '';
 
 function getJDGoodsListData(basic_url){
@@ -75,12 +77,13 @@ function getJDGoodsData(data) {
             if (typeof(image_url) == 'undefined'){
                 continue;
             }
+            var goods_sha1 = sha1(image_url);
             goods_info['goods_sku_id'] = goods_sku_id;
-            goods_info['goods_url'] = goods_url;
+            goods_info['goods_sha1'] = goods_sha1;
             goods_info['image_url'] = image_url;
             goods_info['goods_desc'] = goods_desc;
             goods_info_list.push(goods_info);
-            image_url_list.push(image_url);
+            image_url_list.push({'image_url':image_url,'image_sha1':goods_sha1});
             goods_sku_list.push(goods_sku_id);
         }
         //console.log(goods_info_list);
@@ -99,28 +102,42 @@ function getJDGoodsData(data) {
             }
         }
         if(area_id != ''){
-            console.log(goods_sku_list.length);
+            //console.log(goods_sku_list.length);
             getJDGoodsPrice(goods_sku_list,area_id);
         }
+        cacheJDGoodsList(goods_info_list);
         // 取得网页里面的script信息，取得获取价格的
-        //cacheJDImageList(image_url_list);
+        cacheJDImageList(image_url_list);
     });
 }
 
-function cacheJDImageList(url_list){
-    url_list.forEach(function(obj){
-        JD_download.JD_image_download(obj);
-        client.lpush('JD_GOODS_IMAGE_LIST',obj,function(err){
+//
+function cacheJDGoodsList(goods_list){
+    goods_list.forEach(function(obj){
+        var goods_obj = JSON.stringify(obj);
+        client.lpush('JD_GOODS_LIST',goods_obj,function(err){
             if(err){
                 console.log(err);
             }
         })
+    });
+}
+
+
+function cacheJDImageList(url_list){
+    url_list.forEach(function(obj){
+        JD_download.JD_image_download(obj);
+        /*client.lpush('JD_GOODS_IMAGE_LIST',obj,function(err){
+            if(err){
+                console.log(err);
+            }
+        })*/
     })
 }
 
 
 function getJDGoodsPrice(goods_sku_list,area_key){
-    console.log(area_key);
+    //console.log(area_key);
     var area = area_key.replace(',','_');
     var price_list_buffer = [];
     http.get('http://p.3.cn/prices/mgets?skuIds=J_' + goods_sku_list.join(',J_') + '&type=1&area=' + area ,function(res){
@@ -137,15 +154,45 @@ function getJDGoodsPrice(goods_sku_list,area_key){
 
 
 var goods_JD_price_dic = {};
-var goods_MK_price_dic = {};
 function pickJDGoodsPrice(price_list){
     var price_json_list = JSON.parse(price_list);
     price_json_list.forEach(function(obj){
-       goods_JD_price_dic[obj['id']] = obj['p'];
-       goods_MK_price_dic[obj['id']] = obj['m'];
+       goods_JD_price_dic[obj['id']] = [obj['p'],obj['m']];
     });
     if(page_index == max_page_index){
         console.log(goods_JD_price_dic);
     }
 }
 
+function setPriceIntoGoodsList(){
+    client.lrange('JD_GOODS_LIST','0','-1',function(err,data){
+        if(err){
+            console.log(err);
+        }
+        var goods_list = data;
+        goods_list.forEach(function(obj){
+            var goods_obj = JSON.parse(obj);
+            var goods_sku_id = goods_obj['goods_sku_id'];
+            if (goods_JD_price_dic.hasOwnProperty('J_'+goods_sku_id)){
+                goods_obj['JD_price'] = goods_JD_price_dic['J_'+goods_sku_id][0];
+                goods_obj['Market_price'] = goods_JD_price_dic['J_'+goods_sku_id][1];
+            }else{
+                goods_obj['JD_price'] = '';
+                goods_obj['Market_price'] = '';
+            }
+
+            client.lpush('ALL_JD_GOODS_LIST',JSON.stringify(goods_obj),function(err){
+                if(err){
+                    console.log(err);
+                }
+            })
+            //return goods_obj;
+        });
+        // 重新存入缓存里卖弄
+
+       // console.log(new_goods_list);
+    })
+}
+
+
+exports.setPriceIntoGoodsList = setPriceIntoGoodsList;
