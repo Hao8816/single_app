@@ -105,7 +105,7 @@ function getJDGoodsData(data) {
             //console.log(goods_sku_list.length);
             getJDGoodsPrice(goods_sku_list,area_id);
         }
-        cacheJDGoodsList(goods_info_list);
+        //cacheJDGoodsList(goods_info_list);
         // 取得网页里面的script信息，取得获取价格的
         cacheJDImageList(image_url_list);
     });
@@ -126,7 +126,7 @@ function cacheJDGoodsList(goods_list){
 
 function cacheJDImageList(url_list){
     url_list.forEach(function(obj){
-        JD_download.JD_image_download(obj);
+        JD_download.JD_image_download(obj,'goods_image');
         /*client.lpush('JD_GOODS_IMAGE_LIST',obj,function(err){
             if(err){
                 console.log(err);

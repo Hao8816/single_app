@@ -145,21 +145,18 @@
 }
 
 .ad-item-outter{
-    padding: 0px;
-    border: 1px solid #ddd;
-    margin: -1px -1px 0px 0px;
+    padding: 5px 0px;
     background: #fff
 }
 .ad-item{
     position: relative;
     cursor: pointer;
-    height: 270px;
 }
 .ad-item img{
     margin: auto;
 }
 .ad-item:hover{
-    box-shadow: 1px 1px 1px 1px #09c;
+   color: #09c;
 }
 .ad-item .ad-title{
     margin: 0;
@@ -172,6 +169,7 @@
     text-align: left;
     font-size: 12px;
     color: #999;
+    height: 50px;
     /*position: absolute;
     background-color:#333;
     color: #fff;*/

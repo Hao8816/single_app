@@ -26,7 +26,7 @@
 </head>
 <body>
 <header id="header" data-headroom class="container-fluid animated">
-    <div class="row" style="background-color:rgba(48, 63, 159, 0.87);padding: 8px 10px;color: #fff;">
+    <div class="row" style="background-color:rgba(48, 63, 159, 0.87);padding: 0.8rem 10px;color: #fff;">
         <div class="col-xs-6 col-sm-5 col-md-4">
             <img src="/images/single_logo.ico" alt=""/>
             <a href="/single/index/" style="color: #ffffff">首页</a>
@@ -39,7 +39,7 @@
         </div>
     </div>
 </header>
-<div class="container" id="root-view-container" style="min-height: 1700px;">
+<div class="container-fluid" id="root-view-container" style="min-height: 1700px;">
     <div class="row">
         <div class="col-xs-12 col-md-3" style="height: 40px;">
 
@@ -142,7 +142,7 @@
                 <a class="carousel-control right" href="#myCarousel" data-slide="next"></a>
             </div>
         </div>
-        <div class="col-xs-12 col-md-3" style="padding: 0">
+        <div class="col-xs-12 col-md-3 hidden-sm" style="padding: 0">
             <div style="overflow:auto;padding: 15px;">
                 <ul class="location_nav">
                     <li><i class="sicon-hotel"></i>旅馆</li>
@@ -173,7 +173,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="home">
                         <div ng-controller="ShowGoodsCtrl">
-                            <div class="ad-item-outter col-xs-4 col-md-2" ng-repeat="good in goods">
+                            <div class="ad-item-outter col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="good in goods">
                                 <div class="ad-item">
                                     <img class="img-responsive" ng-src="{{good.image_url}}" alt=""/>
                                     <p class="ad-title">{{good.JD_price}}</p>

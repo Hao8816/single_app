@@ -69,7 +69,7 @@ function getGoogsList(req,res){
        res.send(rsdic);
        res.end();
    })*/
-    client.lrange('ALL_JD_GOODS_LIST','0','-1',function(err,data){
+    client.lrange('ALL_JD_GOODS_LIST','0','331',function(err,data){
         var rsdic = {};
         if(err){
             console.log(err);
@@ -185,7 +185,7 @@ function getCategoryGoodList(req,res){
 
 function getGoodsAttrList(req,res){
     // 直接从redis里面读取数据
-    client.hgetall('MOBILE_ATTR',function(err,data){
+    client.hgetall('JD_CATEGORY_PHONE_PROP',function(err,data){
         var rsdic = {};
         var data_list = [];
         for(var key in data){

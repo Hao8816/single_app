@@ -97,7 +97,7 @@ function getZOLData(data,encoding){
 
     
         console.log(data)
-        // setDataInRedis(data);
+        setDataInRedis(data);
     });
 }
 
