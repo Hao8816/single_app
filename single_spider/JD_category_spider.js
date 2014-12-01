@@ -72,7 +72,7 @@ function getJDCategoryData(data) {
             JD_download.JD_image_download({'image_url':band_logo_url,'image_sha1':band_sha1},'band_logo');
         }
         //console.log(band_data_list);
-        cacheJDCategoryBandData({category_name:band_data_list});
+        cacheJDCategoryBandData(category_name,band_data_list);
 
         var prop_list = $('.attrs .prop-attrs');
         var prop_data = {};
@@ -94,14 +94,12 @@ function getJDCategoryData(data) {
 
 
 // cache category data
-function cacheJDCategoryBandData(band_data){
-    for(band in band_data){
-        client.hset('JD_CATEGORY_BAND',band,JSON.stringify(band_data[band]),function(err){
-            if (err) {
-                console.log(err);
-            }
-        })
-    }
+function cacheJDCategoryBandData(band_name,band_list){
+    client.hset('JD_CATEGORY_BAND',band_name,JSON.stringify(band_list),function(err){
+        if (err) {
+            console.log(err);
+        }
+    })
 }
 
 function cacheJDCategoryPropData(prop_data){

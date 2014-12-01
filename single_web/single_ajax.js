@@ -183,9 +183,26 @@ function getCategoryGoodList(req,res){
     )
 };
 
+
+function getGoodsBandList(req,res){
+    client.hget('JD_CATEGORY_BAND','PHONE',function (err,data){
+        if(err){
+            console.log(err)
+        }
+        var rsdic = {};
+        rsdic['ret'] = '0001';
+        rsdic['data'] = JSON.parse(data);
+        res.send(rsdic);
+        res.end();
+    });
+}
+
 function getGoodsAttrList(req,res){
     // 直接从redis里面读取数据
     client.hgetall('JD_CATEGORY_PHONE_PROP',function(err,data){
+        if(err){
+            console.log(err)
+        }
         var rsdic = {};
         var data_list = [];
         for(var key in data){
@@ -204,3 +221,4 @@ exports.checkUserName = checkUserName;
 exports.getGoodList = getGoogsList;
 exports.getCategoryGoodList = getCategoryGoodList;
 exports.getGoodsAttrList = getGoodsAttrList;
+exports.getGoodsBandList = getGoodsBandList;
