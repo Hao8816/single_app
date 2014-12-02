@@ -82,6 +82,7 @@ function getJDGoodsData(data) {
             goods_info['goods_sha1'] = goods_sha1;
             goods_info['image_url'] = image_url;
             goods_info['goods_desc'] = goods_desc;
+            goods_info['goods_url'] = goods_url;
             goods_info_list.push(goods_info);
             image_url_list.push({'image_url':image_url,'image_sha1':goods_sha1});
             goods_sku_list.push(goods_sku_id);
@@ -105,7 +106,7 @@ function getJDGoodsData(data) {
             //console.log(goods_sku_list.length);
             getJDGoodsPrice(goods_sku_list,area_id);
         }
-        //cacheJDGoodsList(goods_info_list);
+        cacheJDGoodsList(goods_info_list);
         // 取得网页里面的script信息，取得获取价格的
         cacheJDImageList(image_url_list);
     });
