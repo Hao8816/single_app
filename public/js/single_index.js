@@ -23,7 +23,7 @@ function ShowGoodsCtrl($scope,$http){
     $scope.showGoodsInfo = function(goods_info){
         // 由于api暂时只支持字符串，所以用JSON序列化成字符串
         sessionStorage.setItem('latest_visited',JSON.stringify(goods_info));
-        location.href='/single/goods/?id='+goods_info.sha1;
+        location.href='/single/goods/?id='+goods_info.goods_sha1;
         console.log(goods_info)
     }
 }

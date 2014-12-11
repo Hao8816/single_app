@@ -21,3 +21,5 @@ POST /ajax/get_category_good_list/ 200 9ms - 68.22kb
 POST /ajax/start/ 200 1ms - 194b
 
 
+
+关于前端MVC的思考：
