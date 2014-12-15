@@ -23,3 +23,4 @@ POST /ajax/start/ 200 1ms - 194b
 
 
 关于前端MVC的思考：
+ test
