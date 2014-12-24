@@ -54,6 +54,7 @@ function getJDGoodsData(data) {
     //console.log(data.toString())
     var env = require('jsdom').env;
     // 设置html环境
+    console.log(decode_string.toString())
     env(decode_string.toString(), function (errors, window) {
         var $ = require('jquery')(window);
 
