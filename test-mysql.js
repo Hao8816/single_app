@@ -3,6 +3,9 @@ var connection = mysql.createConnection({
     host     : 'localhost',
     user     : 'chenhao',
     password : 'chenhao'
+},function(err){
+
+    console.log(err)
 });
 
 connection.connect();

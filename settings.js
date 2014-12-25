@@ -9,7 +9,7 @@ var Database_Settings={
     user     : "chenhao",
     password : "chenhao",
     protocol : "mysql",
-    socketPath: '/var/run/mysqld/mysqld.sock',
+    //socketPath: '/var/run/mysqld/mysqld.sock',
     port     : "3306"
 };
 

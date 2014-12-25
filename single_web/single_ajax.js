@@ -89,7 +89,7 @@ function getCategoryGoodListOld(req,res){
    // get rrecord from redis
    async.waterfall([
        function(readMysql){
-           client.lrange('GOODS_LIST','0','-1',function(err,value){
+           client.lrange('JD_GOODS_LIST','0','-1',function(err,value){
                if (err){
                    console.log('Get Value By Key Error'+err);
                }

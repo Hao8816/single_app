@@ -190,7 +190,7 @@ function setPriceIntoGoodsList(){
             })
             //return goods_obj;
         });
-        // 重新存入缓存里卖弄
+        // 重新存入缓存里
 
        // console.log(new_goods_list);
     })

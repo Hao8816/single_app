@@ -1,5 +1,5 @@
 var models = require('./single_model');
-var sha1 = require('js-sha1');
+var sha1 = require('sha1');
 
 
 // syncdb
